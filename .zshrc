@@ -27,13 +27,22 @@ setopt noautoremoveslash
 ###
 ### display
 ###
-PROMPT=$'%{\e[32m%}[%n@%m %1~]%#%{\e[m%} '
-RPROMPT=$'%{\e[32m%}[%/]%{\e[m%}'
+# 色
+local DEFAULT=$'%{\e[m%}'
+local GREEN=$'%{\e[32m%}'
+local YELLOW=$'%{\e[33m%}'
+local RED=$'%{\e[31m%}'
+
+# 一般ユーザ
+PROMPT="${GREEN}[%n@%m %1~]%#${DEFAULT} "
+RPROMPT="${GREEN}[%/]${DEFAULT}"
+SPROMPT="correct '${RED}%R${DEFAULT}' to '${RED}%r${DEFAULT}' [nyae]?"
 
 # root
 if [ ${UID} = 0 ]; then
-  PROMPT=$'%{\e[33m%}[%n@%m %1~]%#%{\e[m%} '
-  RPROMPT=$'%{\e[33m%}[%/]%{\e[m%}'
+  PROMPT="${YELLOW}[%n@%m %1~]%#${DEFAULT} "
+  RPROMPT="${YELLOW}[%/]${DEFAULT}"
+  SPROMPT="correct '${RED}%R${DEFAULT}' to '${RED}%r${DEFAULT}' [nyae]?"
 fi
 
 # ターミナルタイトル表示 user@host:~/dir

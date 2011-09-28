@@ -1,121 +1,190 @@
-#
-# completion
-#
-autoload -U compinit
-compinit
+###
+### LANG
+###
+export LANG=ja_JP.UTF-8
+
+
+###
+### completion
+###
+# 補完を有効にする
+autoload -U compinit && compinit
+
+# 大文字を入力した場合は大文字のみマッチ
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
+# 補完候補をカラー表示
 zstyle ':completion:*' list-colors ''
 
+# ウィンドウからあふれる時のみ候補表示の確認を行う
+LISTMAX=0
 
-#
-# display
-#
+# "=" 以降も保管できる
+setopt magic_equal_subst
+# 末尾のスラッシュを自動削除しない
+setopt noautoremoveslash
+
+
+###
+### display
+###
 PROMPT=$'%{\e[32m%}[%n@%m %1~]%#%{\e[m%} '
 RPROMPT=$'%{\e[32m%}[%/]%{\e[m%}'
-if [ $UID = 0 ]; then
+
+# root
+if [ ${UID} = 0 ]; then
   PROMPT=$'%{\e[33m%}[%n@%m %1~]%#%{\e[m%} '
   RPROMPT=$'%{\e[33m%}[%/]%{\e[m%}'
 fi
 
-if [[ $TERM == [xk]term || $TERM == screen ]]; then
+# ターミナルタイトル表示 user@host:~/dir
+if [[ ${TERM} == [xk]term || ${TERM} == screen ]]; then
   precmd() {
     echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD/~HOME/~}\007"
   }
 fi
 
 
-#
-# history
-#
+###
+### history
+###
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
-LISTMAX=0
-#if [ $UID = 0 ]; then
+HISTSIZE=50000
+SAVEHIST=50000
+
+## root の時にはヒストリ保存しない
+#if [ ${UID} = 0 ]; then
 #  unset HISTFILE
 #  SAVEHIST=0
 #fi
 
+# ヒストリファイルに上書きせず追加する
 setopt append_history
+# 履歴をインクリメンタルに追加
 setopt inc_append_history
+# 履歴の共有
 setopt share_history
+# 重複したコマンドは過去の物を削除
 setopt hist_ignore_all_dups
+# 直前と同じコマンドは追加しない
 setopt hist_ignore_dups
+# スペースから始まるコマンドは追加しない
 setopt hist_ignore_space
+# ヒストリ実行前に一旦編集できる状態にする
+setopt hist_verify
 
 
-#
-# bindkey
-#
+###
+### setting
+###
+# ビープしない
+setopt no_beep
+setopt nolistbeep
+
+# cd 無しでも移動
+setopt auto_cd
+# 自動で pushd する
+setopt auto_pushd
+# 重複するディレクトリは push しない
+setopt pushd_ignore_dups
+
+# コマンド訂正
+setopt correct
+# リストのコンパクト表示
+setopt list_packed
+# 8bit 目を通す
+setopt print_eight_bit
+# ジョブの状態を直ちに知らせる
+setopt notify
+
+# 単語区切り文字
+WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+
+
+###
+### bindkey
+###
+# emacs 風キーバインド
 bindkey -e
+
+# Delete
 bindkey "^[[3~" delete-char
+# Home
 bindkey "^[[1~" beginning-of-line
+# End
 bindkey "^[[4~" end-of-line
+
+# shift-tab - 戻って補完する
 bindkey "\e[Z" reverse-menu-complete
+# C-p/n - 履歴検索
 bindkey "^p" history-beginning-search-backward
 bindkey "^n" history-beginning-search-forward
 
 
-#
-# setting
-#
-setopt no_beep
-setopt nolistbeep
-setopt auto_cd
-setopt auto_pushd
-setopt pushd_ignore_dups
-setopt magic_equal_subst
-setopt correct
-setopt list_packed
-setopt noautoremoveslash
-WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
-
-
-#
-# alias, env
-#
+###
+### alias
+###
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
+
 alias emacs='TERM=xterm-256color emacs -nw'
 alias vls='virsh list --all'
+
 export PAGER=less
+
+# OS 毎の設定
 case ${OSTYPE} in
   linux*)
     alias ls='ls --color=auto'
+    alias ll='ls -l --color=auto'
     ;;
   freebsd*)
     alias ls='ls -G'
+    alias ll='ls -l -G'
+    alias gls='gls --color=auto'
     alias vi='vim'
     ;;
 esac
 
 
-#
-# function
-#
+###
+### function
+###
+# すべてのファイルから検索
 function findgrep() {
-  find ${2} -print0 | xargs -0 grep -n "${1}"
+  find ${2} -type f -print0 | xargs -0 grep -n "${1}"
 }
 
 
-#
-# for tmux
-#
+###
+### for tmux
+###
+# 既にセッションがある時はアタッチ・無いときは新規作成
 alias tm='tmux -2 attach || tmux -2'
 
-if [ "$TMUX" != "" ]; then
+if [ "${TMUX}x" != "x" ]; then
+  # 現在のディレクトリを保ったままウィンドウを作成
   function _tmux_new-window_keep_pwd() {
     PWD=`pwd` tmux new-window
   }
-  zle -N _tmux_new-window_keep_pwd
 
+  # 現在のディレクトリを保ったままウィンドウを分割
   function _tmux_split-window_keep_pwd() {
     PWD=`pwd` tmux split-window
   }
+
+  # widget 化する
+  zle -N _tmux_new-window_keep_pwd
   zle -N _tmux_split-window_keep_pwd
 
+  # ショートカットキー割り当て
   bindkey "^[n" _tmux_new-window_keep_pwd
   bindkey "^[m" _tmux_split-window_keep_pwd
 fi
+
+
+###
+### load other setting
+###
+[ -f ${HOME}/.zshrc.me ] && source ${HOME}/.zshrc.me
 

@@ -31,18 +31,15 @@ setopt noautoremoveslash
 local DEFAULT=$'%{\e[m%}'
 local GREEN=$'%{\e[32m%}'
 local YELLOW=$'%{\e[33m%}'
-local RED=$'%{\e[31m%}'
 
 # 一般ユーザ
 PROMPT="${GREEN}[%n@%m %1~]%#${DEFAULT} "
 RPROMPT="${GREEN}[%/]${DEFAULT}"
-SPROMPT="correct '${RED}%R${DEFAULT}' to '${RED}%r${DEFAULT}' [nyae]?"
 
 # root
 if [ ${UID} = 0 ]; then
   PROMPT="${YELLOW}[%n@%m %1~]%#${DEFAULT} "
   RPROMPT="${YELLOW}[%/]${DEFAULT}"
-  SPROMPT="correct '${RED}%R${DEFAULT}' to '${RED}%r${DEFAULT}' [nyae]?"
 fi
 
 # ターミナルタイトル表示 user@host:~/dir
@@ -132,14 +129,14 @@ bindkey "^n" history-beginning-search-forward
 ###
 ### alias
 ###
+export PAGER=less
+
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
 alias emacs='TERM=xterm-256color emacs -nw'
 alias vls='virsh list --all'
-
-export PAGER=less
 
 # OS 毎の設定
 case ${OSTYPE} in
@@ -162,6 +159,29 @@ esac
 # すべてのファイルから検索
 function findgrep() {
   find ${2} -type f -print0 | xargs -0 grep -n "${1}"
+}
+
+# ファイル暗号化
+function encrypt() {
+  if [ "${1}x" = "${2}x" ]; then
+    echo "error: same file"
+    return 1
+  fi
+  openssl enc -e -aes256 -in ${1} -out ${2}
+}
+
+# ファイル復号化
+function decrypt() {
+  if [ "${1}x" = "${2}x" ]; then
+    echo "error: same file"
+    return 1
+  fi
+  openssl enc -d -aes256 -in ${1} -out ${2}
+}
+
+# s_client
+function stelnet() {
+  openssl s_client -connect ${1}:${2}
 }
 
 

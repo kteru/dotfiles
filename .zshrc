@@ -129,6 +129,9 @@ bindkey "^n" history-beginning-search-forward
 ###
 ### alias
 ###
+# alias でも補完する
+setopt complete_aliases
+
 export PAGER=less
 
 alias rm='rm -i'

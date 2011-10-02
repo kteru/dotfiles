@@ -138,6 +138,7 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
+alias tcpdump='tcpdump -n -s 1600'
 alias emacs='TERM=xterm-256color emacs -nw'
 alias vls='virsh list --all'
 

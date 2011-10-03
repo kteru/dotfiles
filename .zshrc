@@ -14,6 +14,8 @@ autoload -U compinit && compinit
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
 # 補完候補をカラー表示
 zstyle ':completion:*' list-colors ''
+# sudo でも補完する
+zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin
 
 # ウィンドウからあふれる時のみ候補表示の確認を行う
 LISTMAX=0
@@ -27,6 +29,9 @@ setopt noautoremoveslash
 ###
 ### display
 ###
+# プロンプトにエスケープシーケンスを通す
+setopt prompt_subst
+
 # 色
 local DEFAULT=$'%{\e[m%}'
 local GREEN=$'%{\e[32m%}'

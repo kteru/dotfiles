@@ -211,13 +211,23 @@ if [ -n "${TMUX}" ]; then
     PWD=`pwd` tmux split-window
   }
 
+  # 既存のシェルの SSH_AUTH_SOCK を更新
+  function update_ssh_auth_sock() {
+    NEWVAL=`tmux show-environment | grep "^SSH_AUTH_SOCK" | cut -d"=" -f2`
+    if [ -n "${NEWVAL}" ]; then
+      SSH_AUTH_SOCK=${NEWVAL}
+    fi
+  }
+
   # widget 化する
   zle -N _keepdir_tmux_new-window
   zle -N _keepdir_tmux_split-window
+  zle -N update_ssh_auth_sock
 
   # ショートカットキー割り当て
   bindkey "^[n" _keepdir_tmux_new-window
   bindkey "^[m" _keepdir_tmux_split-window
+  bindkey "^[s" update_ssh_auth_sock
 fi
 
 

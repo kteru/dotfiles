@@ -200,24 +200,24 @@ function stelnet() {
 # 既にセッションがある時はアタッチ・無いときは新規作成
 alias tm='tmux -2 attach || tmux -2'
 
-if [ "${TMUX}x" != "x" ]; then
+if [ -n "${TMUX}" ]; then
   # 現在のディレクトリを保ったままウィンドウを作成
-  function _tmux_new-window_keep_pwd() {
+  function _keepdir_tmux_new-window() {
     PWD=`pwd` tmux new-window
   }
 
   # 現在のディレクトリを保ったままウィンドウを分割
-  function _tmux_split-window_keep_pwd() {
+  function _keepdir_tmux_split-window() {
     PWD=`pwd` tmux split-window
   }
 
   # widget 化する
-  zle -N _tmux_new-window_keep_pwd
-  zle -N _tmux_split-window_keep_pwd
+  zle -N _keepdir_tmux_new-window
+  zle -N _keepdir_tmux_split-window
 
   # ショートカットキー割り当て
-  bindkey "^[n" _tmux_new-window_keep_pwd
-  bindkey "^[m" _tmux_split-window_keep_pwd
+  bindkey "^[n" _keepdir_tmux_new-window
+  bindkey "^[m" _keepdir_tmux_split-window
 fi
 
 

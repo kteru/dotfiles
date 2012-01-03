@@ -145,7 +145,7 @@ alias mv='mv -i'
 
 alias tcpdump='tcpdump -n -s 1600'
 alias mysql='mysql --auto-rehash'
-alias emacs='TERM=xterm-256color emacs -nw'
+alias emacs='emacs -nw'
 alias vls='virsh list --all'
 
 # OS 毎の設定

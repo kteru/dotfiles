@@ -1,4 +1,4 @@
-all: screen tmux zsh
+all: screen tmux zsh emacs
 
 screen:
 	ln -fs ${PWD}/.screenrc ${HOME}/.screenrc
@@ -8,4 +8,7 @@ tmux:
 
 zsh:
 	ln -fs ${PWD}/.zshrc ${HOME}/.zshrc
+
+emacs:
+	ln -fs ${PWD}/.emacs.d ${HOME}/.emacs.d
 

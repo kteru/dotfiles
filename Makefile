@@ -10,5 +10,5 @@ zsh:
 	ln -fs ${PWD}/.zshrc ${HOME}/.zshrc
 
 emacs:
-	ln -fs ${PWD}/.emacs.d ${HOME}/.emacs.d
+	ln -fsn ${PWD}/.emacs.d ${HOME}/.emacs.d
 

@@ -9,6 +9,7 @@
 (load "init-general")
 (load "init-defuns")
 (load "init-key")
+(load "init-autoinsert")
 
 ;; 自分で導入した *.el の設定
 (load "config-jaspace")

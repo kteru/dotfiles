@@ -168,7 +168,7 @@ esac
 ###
 # すべてのファイルから検索
 function findgrep() {
-  find ${2} -type f -print0 | xargs -0 grep -n "${1}"
+  find ${2} -type f -print0 | xargs -0 grep -in "${1}"
 }
 
 # ファイル暗号化

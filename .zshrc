@@ -199,7 +199,15 @@ function stelnet() {
 ### for tmux
 ###
 # 既にセッションがある時はアタッチ・無いときは新規作成
-alias tm='tmux -2 attach || tmux -2'
+function tm() {
+  if [ -n "${1}" ]; then
+    tmux -2 attach-session -t ${1} || \
+      tmux -2 new-session -s ${1}
+  else
+    tmux -2 attach-session || \
+      tmux -2 new-session
+  fi
+}
 
 if [ -n "${TMUX}" ]; then
   # 現在のディレクトリを保ったままウィンドウを作成

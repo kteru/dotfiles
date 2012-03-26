@@ -209,6 +209,9 @@ function tm() {
   fi
 }
 
+# セッションをリストアップ
+alias tmls='tmux list-sessions'
+
 if [ -n "${TMUX}" ]; then
   # 現在のディレクトリを保ったままウィンドウを作成
   function _keepdir_tmux_new-window() {

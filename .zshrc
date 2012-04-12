@@ -246,5 +246,6 @@ fi
 ###
 ### load other setting
 ###
+[ -f ${HOME}/.zshrc.keychain ] && source ${HOME}/.zshrc.keychain
 [ -f ${HOME}/.zshrc.me ] && source ${HOME}/.zshrc.me
 

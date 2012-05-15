@@ -55,3 +55,6 @@
 (setq-default save-place t)
 (setq save-place-file "~/.emacs.d/var/.emacs-places")
 
+;; cperl-mode
+(defalias 'perl-mode 'cperl-mode)
+

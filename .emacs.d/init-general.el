@@ -57,4 +57,6 @@
 
 ;; cperl-mode
 (defalias 'perl-mode 'cperl-mode)
+(add-hook 'cperl-mode-hook
+    '(lambda () (cperl-set-style "PerlStyle")))
 

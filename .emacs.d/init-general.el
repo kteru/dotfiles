@@ -55,6 +55,9 @@
 (setq-default save-place t)
 (setq save-place-file "~/.emacs.d/var/.emacs-places")
 
+;; narrow-to-region
+(put 'narrow-to-region 'disabled nil)
+
 ;; cperl-mode
 (defalias 'perl-mode 'cperl-mode)
 (add-hook 'cperl-mode-hook

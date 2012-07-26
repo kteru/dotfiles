@@ -106,6 +106,8 @@ setopt list_packed
 setopt print_eight_bit
 # ジョブの状態を直ちに知らせる
 setopt notify
+# コマンド実行後 RPROMPT を消す
+setopt transient_rprompt
 
 # 単語区切り文字
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'

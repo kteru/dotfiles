@@ -10,6 +10,7 @@
         ("\\.rb$" . "rb")
         ("\\.pl$" . "pl")
         ("\\.pm$" . "pm")
+        ("\\.html$" . "html")
         ) auto-insert-alist))
 
 ;; 新規作成時に実行

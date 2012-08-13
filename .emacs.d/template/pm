@@ -4,6 +4,10 @@ use strict;
 use warnings;
 
 
+sub hoge {
+    return 0;
+}
+
 
 1;
 

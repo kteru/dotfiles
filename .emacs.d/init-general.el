@@ -34,6 +34,9 @@
 ;; behavior
 ;;------------------------------
 
+;; インデントは半角スペース
+(setq-default indent-tabs-mode nil)
+
 ;; バックアップファイルを作成しない
 (setq backup-inhibited t)
 

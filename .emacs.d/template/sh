@@ -5,4 +5,5 @@
 #
 PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/sbin:/usr/sbin
 export PATH
+DIR_BASE=$(cd $(dirname ${0}); pwd)
 

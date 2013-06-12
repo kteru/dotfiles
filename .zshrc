@@ -74,8 +74,6 @@ setopt append_history
 setopt inc_append_history
 # 履歴の共有
 setopt share_history
-# 重複したコマンドは過去の物を削除
-setopt hist_ignore_all_dups
 # 直前と同じコマンドは追加しない
 setopt hist_ignore_dups
 # スペースから始まるコマンドは追加しない

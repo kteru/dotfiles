@@ -1,7 +1,9 @@
 ###
-### LANG
+### ENV
 ###
 export LANG=ja_JP.UTF-8
+export PAGER=less
+umask 0022
 
 
 ###
@@ -136,8 +138,6 @@ bindkey "^n" history-beginning-search-forward
 ###
 # alias でも補完する
 setopt complete_aliases
-
-export PAGER=less
 
 alias rm='rm -i'
 alias cp='cp -i'

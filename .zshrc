@@ -80,6 +80,8 @@ setopt share_history
 setopt hist_ignore_dups
 # スペースから始まるコマンドは追加しない
 setopt hist_ignore_space
+# 重複したコマンドは過去の物を削除
+setopt hist_ignore_all_dups
 # ヒストリ実行前に一旦編集できる状態にする
 setopt hist_verify
 

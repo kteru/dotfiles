@@ -162,6 +162,10 @@ case ${OSTYPE} in
     alias gls='gls --color=auto'
     alias vi='vim'
     ;;
+  darwin*)
+    alias ls='ls -G'
+    alias ll='ls -l -G'
+    ;;
 esac
 
 

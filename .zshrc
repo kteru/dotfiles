@@ -165,6 +165,7 @@ case ${OSTYPE} in
   darwin*)
     alias ls='ls -G'
     alias ll='ls -l -G'
+    alias rsync='rsync --iconv=UTF-8-MAC,UTF-8'
     ;;
 esac
 

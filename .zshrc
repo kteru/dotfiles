@@ -154,17 +154,14 @@ alias vls='virsh list --all'
 case ${OSTYPE} in
   linux*)
     alias ls='ls --color=auto'
-    alias ll='ls -l --color=auto'
     ;;
   freebsd*)
     alias ls='ls -G'
-    alias ll='ls -l -G'
     alias gls='gls --color=auto'
     alias vi='vim'
     ;;
   darwin*)
     alias ls='ls -G'
-    alias ll='ls -l -G'
     alias rsync='rsync --iconv=UTF-8-MAC,UTF-8'
     ;;
 esac

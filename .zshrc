@@ -157,11 +157,12 @@ case ${OSTYPE} in
     ;;
   freebsd*)
     alias ls='ls -G'
-    alias gls='gls --color=auto'
+    which gls > /dev/null 2>&1 && alias ls='gls --color=auto'
     alias vi='vim'
     ;;
   darwin*)
     alias ls='ls -G'
+    which gls > /dev/null 2>&1 && alias ls='gls --color=auto'
     alias rsync='rsync --iconv=UTF-8-MAC,UTF-8'
     ;;
 esac

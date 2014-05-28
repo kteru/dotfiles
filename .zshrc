@@ -2,6 +2,8 @@
 ### ENV
 ###
 export LANG=ja_JP.UTF-8
+export LC_TIME=C
+export LC_MESSAGES=C
 export PAGER=less
 umask 0022
 

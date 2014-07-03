@@ -253,7 +253,7 @@ fi
 ###
 ### load other setting
 ###
-for i in ${HOME}/.zshrc.d/*.zsh(N); do
+for i in ${HOME}/.zshrc.d/*.zsh(N-.); do
   source "${i}"
 done
 

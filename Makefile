@@ -8,6 +8,7 @@ tmux:
 
 zsh:
 	ln -fs ${PWD}/.zshrc ${HOME}/.zshrc
+	test -d ${HOME}/.zshrc.d || mkdir ${HOME}/.zshrc.d
 
 emacs:
 	ln -fsn ${PWD}/.emacs.d ${HOME}/.emacs.d

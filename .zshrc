@@ -156,6 +156,7 @@ alias vls='virsh list --all'
 case ${OSTYPE} in
   linux*)
     alias ls='ls --color=auto'
+    alias systemctl='systemctl --no-pager'
     ;;
   freebsd*)
     alias ls='ls -G'

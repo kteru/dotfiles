@@ -174,11 +174,6 @@ esac
 ###
 ### function
 ###
-# すべてのファイルから検索
-function findgrep() {
-  find ${2} -type f -print0 | xargs -0 grep -in "${1}"
-}
-
 # ファイル暗号化
 function encrypt() {
   if [ "${1}x" = "${2}x" ]; then

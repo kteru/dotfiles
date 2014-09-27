@@ -41,6 +41,10 @@
 ;; バックアップファイルを作成しない
 (setq backup-inhibited t)
 
+;; オートセーブファイルの保存先変更
+(setq auto-save-file-name-transforms
+    `((".*" ,(expand-file-name "~/.emacs.d/var/") t)))
+
 ;; 終了時にオートセーブファイルを削除する
 (setq delete-auto-save-files t)
 

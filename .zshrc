@@ -178,6 +178,7 @@ case ${OSTYPE} in
     alias ls='ls -G'
     which gls > /dev/null 2>&1 && alias ls='gls --color=auto'
     alias rsync='rsync --iconv=UTF-8-MAC,UTF-8'
+    alias ldd='Use otool -L'
     ;;
 esac
 

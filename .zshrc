@@ -33,6 +33,9 @@ setopt noautoremoveslash
 ###
 ### display
 ###
+# vcs_info を有効にする
+autoload -U vcs_info
+
 # プロンプトにエスケープシーケンスを通す
 setopt prompt_subst
 
@@ -43,17 +46,18 @@ local YELLOW=$'%{\e[33m%}'
 
 # 一般ユーザ
 PROMPT='${GREEN}[%n@%m %1~]%#${DEFAULT} '
-RPROMPT='${GREEN}[%/]${DEFAULT}'
+RPROMPT='${vcs_info_msg_0_}${GREEN}[%/]${DEFAULT}'
 
 # root
 if [ ${UID} = 0 ]; then
   PROMPT='${YELLOW}[%n@%m %1~]%#${DEFAULT} '
-  RPROMPT='${YELLOW}[%/]${DEFAULT}'
+  RPROMPT='${vcs_info_msg_0_}${YELLOW}[%/]${DEFAULT}'
 fi
 
 # precmd
-if [[ ${TERM} == [xk]term || ${TERM} == screen ]]; then
+if [[ ${TERM} == [xk]term* || ${TERM} == screen ]]; then
   precmd() {
+    vcs_info
     # ターミナルタイトル表示 user@host:~/dir
     echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD/~HOME/~}\007"
   }

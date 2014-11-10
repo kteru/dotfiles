@@ -42,18 +42,19 @@ local GREEN=$'%{\e[32m%}'
 local YELLOW=$'%{\e[33m%}'
 
 # 一般ユーザ
-PROMPT="${GREEN}[%n@%m %1~]%#${DEFAULT} "
-RPROMPT="${GREEN}[%/]${DEFAULT}"
+PROMPT='${GREEN}[%n@%m %1~]%#${DEFAULT} '
+RPROMPT='${GREEN}[%/]${DEFAULT}'
 
 # root
 if [ ${UID} = 0 ]; then
-  PROMPT="${YELLOW}[%n@%m %1~]%#${DEFAULT} "
-  RPROMPT="${YELLOW}[%/]${DEFAULT}"
+  PROMPT='${YELLOW}[%n@%m %1~]%#${DEFAULT} '
+  RPROMPT='${YELLOW}[%/]${DEFAULT}'
 fi
 
-# ターミナルタイトル表示 user@host:~/dir
+# precmd
 if [[ ${TERM} == [xk]term || ${TERM} == screen ]]; then
   precmd() {
+    # ターミナルタイトル表示 user@host:~/dir
     echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD/~HOME/~}\007"
   }
 fi

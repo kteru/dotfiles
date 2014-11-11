@@ -33,6 +33,12 @@ setopt noautoremoveslash
 ###
 ### display
 ###
+# 色
+autoload -U colors && colors
+
+# プロンプトにエスケープシーケンスを通す
+setopt prompt_subst
+
 # vcs_info を有効にする
 autoload -U vcs_info
 zstyle ':vcs_info:*' enable git
@@ -42,22 +48,14 @@ zstyle ':vcs_info:git:*' unstagedstr '!'
 zstyle ':vcs_info:git:*' formats '%c%u [%b]'
 zstyle ':vcs_info:git:*' actionformats '%c%u [%b|%a]'
 
-# プロンプトにエスケープシーケンスを通す
-setopt prompt_subst
-
-# 色
-local DEFAULT=$'%{\e[m%}'
-local GREEN=$'%{\e[32m%}'
-local YELLOW=$'%{\e[33m%}'
-
 # 一般ユーザ
-PROMPT='${GREEN}[%n@%m %1~]%#${DEFAULT} '
-RPROMPT='${vcs_info_msg_0_}${GREEN}[%/]${DEFAULT}'
+PROMPT='%{${fg[green]}%}[%n@%m %1~]%#%{${reset_color}%} '
+RPROMPT='${vcs_info_msg_0_}%{${fg[green]}%}[%/]%{${reset_color}%}'
 
 # root
 if [ ${UID} = 0 ]; then
-  PROMPT='${YELLOW}[%n@%m %1~]%#${DEFAULT} '
-  RPROMPT='${vcs_info_msg_0_}${YELLOW}[%/]${DEFAULT}'
+  PROMPT='%{${fg[yellow]}%}[%n@%m %1~]%#%{${reset_color}%} '
+  RPROMPT='${vcs_info_msg_0_}%{${fg[yellow]}%}[%/]%{${reset_color}%}'
 fi
 
 # precmd

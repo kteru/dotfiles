@@ -170,7 +170,6 @@ case ${OSTYPE} in
   freebsd*)
     alias ls='ls -G'
     which gls > /dev/null 2>&1 && alias ls='gls --color=auto'
-    alias vi='vim'
     ;;
   darwin*)
     alias ls='ls -G'

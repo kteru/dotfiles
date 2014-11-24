@@ -44,7 +44,7 @@ autoload -U vcs_info
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:*' check-for-changes true
 zstyle ':vcs_info:git:*' stagedstr '+'
-zstyle ':vcs_info:git:*' unstagedstr '!'
+zstyle ':vcs_info:git:*' unstagedstr '*'
 zstyle ':vcs_info:git:*' formats '%c%u [%b]'
 zstyle ':vcs_info:git:*' actionformats '%c%u [%b|%a]'
 

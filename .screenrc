@@ -4,6 +4,7 @@ autodetach on
 startup_message off
 termcapinfo xterm 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
 hardstatus alwayslastline "%{= wk}[%m/%d %c] %-w%{= gk}%n %t%{-}%+w %=[%h]"
+logfile "screen.%Y%m%d-%02c:%s.log"
 bindkey -k k9 screen
 bindkey -k k; title
 bindkey -k F1 prev

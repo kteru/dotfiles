@@ -176,6 +176,7 @@ case ${OSTYPE} in
     which gls > /dev/null 2>&1 && alias ls='gls --color=auto'
     alias rsync='rsync --iconv=UTF-8-MAC,UTF-8'
     alias ldd='echo Use otool -L'
+    alias atom='reattach-to-user-namespace atom'
     ;;
 esac
 

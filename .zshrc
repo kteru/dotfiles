@@ -41,12 +41,21 @@ setopt prompt_subst
 
 # vcs_info を有効にする
 autoload -U vcs_info
+autoload -U is-at-least
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:*' check-for-changes true
 zstyle ':vcs_info:git:*' stagedstr '+'
 zstyle ':vcs_info:git:*' unstagedstr '*'
 zstyle ':vcs_info:git:*' formats '%c%u [%b]'
 zstyle ':vcs_info:git:*' actionformats '%c%u [%b|%a]'
+if is-at-least 4.3.11; then
+  zstyle ':vcs_info:git+set-message:*' hooks git-untracked
+  function +vi-git-untracked() {
+    if git status --porcelain 2> /dev/null | grep "^??" > /dev/null 2>&1; then
+      hook_com[unstaged]+='?'
+    fi
+  }
+fi
 
 # 一般ユーザ
 PROMPT='%{${fg[green]}%}[%n@%m %1~]%#%{${reset_color}%} '

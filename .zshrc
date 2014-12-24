@@ -49,10 +49,20 @@ zstyle ':vcs_info:git:*' unstagedstr '*'
 zstyle ':vcs_info:git:*' formats '%c%u [%b]'
 zstyle ':vcs_info:git:*' actionformats '%c%u [%b|%a]'
 if is-at-least 4.3.11; then
-  zstyle ':vcs_info:git+set-message:*' hooks git-untracked
+  zstyle ':vcs_info:git+set-message:*' hooks git-untracked \
+                                             git-push-count
+
   function +vi-git-untracked() {
     if git status --porcelain 2> /dev/null | grep "^??" > /dev/null 2>&1; then
       hook_com[unstaged]+='?'
+    fi
+  }
+
+  function +vi-git-push-count() {
+    branch=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
+    count=`git rev-list remotes/origin/${branch}.. 2> /dev/null | wc -l | tr -d ' '`
+    if [ ${count} -gt 0 ]; then
+      hook_com[unstaged]+=" p${count}"
     fi
   }
 fi

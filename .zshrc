@@ -50,11 +50,19 @@ zstyle ':vcs_info:git:*' formats '%c%u [%b]'
 zstyle ':vcs_info:git:*' actionformats '%c%u [%b|%a]'
 if is-at-least 4.3.11; then
   zstyle ':vcs_info:git+set-message:*' hooks git-untracked \
+                                             git-stash-count \
                                              git-push-count
 
   function +vi-git-untracked() {
     if git status --porcelain 2> /dev/null | grep "^??" > /dev/null 2>&1; then
       hook_com[unstaged]+='?'
+    fi
+  }
+
+  function +vi-git-stash-count() {
+    count=`git stash list 2> /dev/null | wc -l | tr -d ' '`
+    if [ ${count} -gt 0 ]; then
+      hook_com[unstaged]+=" s${count}"
     fi
   }
 

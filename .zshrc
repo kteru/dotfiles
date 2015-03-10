@@ -202,6 +202,8 @@ case ${OSTYPE} in
   darwin*)
     alias ls='ls -G'
     which gls > /dev/null 2>&1 && alias ls='gls --color=auto'
+    which gsed > /dev/null 2>&1 && alias sed='gsed'
+    which gawk > /dev/null 2>&1 && alias awk='gawk'
     alias rsync='rsync --iconv=UTF-8-MAC,UTF-8'
     alias ldd='echo Use otool -L'
     alias atom='reattach-to-user-namespace atom'

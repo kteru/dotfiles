@@ -77,12 +77,12 @@ fi
 
 # 一般ユーザ
 PROMPT='%{${fg[green]}%}[%n@%m %1~]%#%{${reset_color}%} '
-RPROMPT='${vcs_info_msg_0_}%{${fg[green]}%}[%/]%{${reset_color}%}'
+RPROMPT='${vcs_info_msg_0_}%{${fg[green]}%}[%50<...<%/]%{${reset_color}%}'
 
 # root
 if [ ${UID} = 0 ]; then
   PROMPT='%{${fg[yellow]}%}[%n@%m %1~]%#%{${reset_color}%} '
-  RPROMPT='${vcs_info_msg_0_}%{${fg[yellow]}%}[%/]%{${reset_color}%}'
+  RPROMPT='${vcs_info_msg_0_}%{${fg[yellow]}%}[%50<...<%/]%{${reset_color}%}'
 fi
 
 # precmd

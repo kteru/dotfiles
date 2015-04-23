@@ -1,6 +1,5 @@
-# keychain
 if which keychain > /dev/null 2>&1; then
-  keychain --quiet ~/.ssh/id_rsa
-  source ~/.keychain/$HOST-sh
+eval $(keychain --eval --agents ssh --quiet \
+~/.ssh/id_rsa \
+)
 fi
-

@@ -1,5 +1,2 @@
-[user]
-	name = teru
-	email = teru@kteru.net
 [init]
 	templatedir = ~/.git.template.d

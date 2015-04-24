@@ -14,6 +14,9 @@
 	st = status
 	ss = status -s
 
+	ba = branch -a
+	bm = branch --merged
+
 	co = checkout
 	cb = checkout -b
 

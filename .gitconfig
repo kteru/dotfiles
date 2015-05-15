@@ -16,6 +16,7 @@
 
 	ba = branch -a
 	bm = branch --merged
+	br = branch -r
 
 	co = checkout
 	cb = checkout -b

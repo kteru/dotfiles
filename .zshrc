@@ -46,8 +46,8 @@ zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:*' check-for-changes true
 zstyle ':vcs_info:git:*' stagedstr '+'
 zstyle ':vcs_info:git:*' unstagedstr '*'
-zstyle ':vcs_info:git:*' formats '%c%u [%b]'
-zstyle ':vcs_info:git:*' actionformats '%c%u [%b|%a]'
+zstyle ':vcs_info:git:*' formats '%c%u%m [%b]'
+zstyle ':vcs_info:git:*' actionformats '%c%u%m [%b|%a]'
 if is-at-least 4.3.11; then
   zstyle ':vcs_info:git+set-message:*' hooks git-untracked-count \
                                              git-stash-count \
@@ -56,14 +56,14 @@ if is-at-least 4.3.11; then
   function +vi-git-untracked-count() {
     count=`git status --porcelain 2> /dev/null | grep "^??" | wc -l | tr -d ' '`
     if [ ${count} -gt 0 ]; then
-      hook_com[unstaged]+=" ?${count}"
+      hook_com[misc]+=" ?${count}"
     fi
   }
 
   function +vi-git-stash-count() {
     count=`git stash list 2> /dev/null | wc -l | tr -d ' '`
     if [ ${count} -gt 0 ]; then
-      hook_com[unstaged]+=" s${count}"
+      hook_com[misc]+=" s${count}"
     fi
   }
 
@@ -71,7 +71,7 @@ if is-at-least 4.3.11; then
     branch=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
     count=`git rev-list remotes/origin/${branch}.. 2> /dev/null | wc -l | tr -d ' '`
     if [ ${count} -gt 0 ]; then
-      hook_com[unstaged]+=" p${count}"
+      hook_com[misc]+=" p${count}"
     fi
   }
 fi

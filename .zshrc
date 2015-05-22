@@ -44,19 +44,29 @@ autoload -U vcs_info
 autoload -U is-at-least
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr '+'
-zstyle ':vcs_info:git:*' unstagedstr '*'
+zstyle ':vcs_info:git:*' stagedstr ' +'
+zstyle ':vcs_info:git:*' unstagedstr ' *'
 zstyle ':vcs_info:git:*' formats '%c%u%m [%b]'
 zstyle ':vcs_info:git:*' actionformats '%c%u%m [%b|%a]'
 if is-at-least 4.3.11; then
-  zstyle ':vcs_info:git+set-message:*' hooks git-untracked-count \
+  zstyle ':vcs_info:git+set-message:*' hooks git-status-count \
                                              git-stash-count \
                                              git-push-count
 
-  function +vi-git-untracked-count() {
-    count=`git status --porcelain 2> /dev/null | grep "^??" | wc -l | tr -d ' '`
-    if [ ${count} -gt 0 ]; then
-      hook_com[misc]+=" ?${count}"
+  function +vi-git-status-count() {
+    gitstatus=`git status --porcelain 2> /dev/null`
+    staged_cnt=`echo "${gitstatus}" | grep -E '^M.' | wc -l | tr -d ' '`
+    unstaged_cnt=`echo "${gitstatus}" | grep -E '^.M' | wc -l | tr -d ' '`
+    untracked_cnt=`echo "${gitstatus}" | grep -E '^\?\?' | wc -l | tr -d ' '`
+
+    if [ ${staged_cnt} -gt 0 ]; then
+      hook_com[staged]+="${staged_cnt}"
+    fi
+    if [ ${unstaged_cnt} -gt 0 ]; then
+      hook_com[unstaged]+="${unstaged_cnt}"
+    fi
+    if [ ${untracked_cnt} -gt 0 ]; then
+      hook_com[misc]+=" ?${untracked_cnt}"
     fi
   }
 

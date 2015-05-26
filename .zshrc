@@ -51,7 +51,7 @@ zstyle ':vcs_info:git:*' actionformats '%c%u%m [%b|%a]'
 if is-at-least 4.3.11; then
   zstyle ':vcs_info:git+set-message:*' hooks git-status-count \
                                              git-stash-count \
-                                             git-push-count
+                                             git-nopush-count
 
   function +vi-git-status-count() {
     gitstatus=`git status --porcelain 2> /dev/null`
@@ -77,9 +77,8 @@ if is-at-least 4.3.11; then
     fi
   }
 
-  function +vi-git-push-count() {
-    branch=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
-    count=`git rev-list remotes/origin/${branch}.. 2> /dev/null | wc -l | tr -d ' '`
+  function +vi-git-nopush-count() {
+    count=`git rev-list remotes/origin/${hook_com[branch]}.. 2> /dev/null | wc -l | tr -d ' '`
     if [ ${count} -gt 0 ]; then
       hook_com[misc]+=" p${count}"
     fi

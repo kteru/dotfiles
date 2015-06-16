@@ -30,3 +30,6 @@
 	d3 = diff HEAD~~~
 
 	hist = log --graph --format='%C(yellow)%h%C(auto)%d%C(reset) %s %C(green)<%an>%C(reset)'
+
+[ghq]
+	root = ~/repos/src

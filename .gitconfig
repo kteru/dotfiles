@@ -29,6 +29,9 @@
 	d2 = diff HEAD~~
 	d3 = diff HEAD~~~
 
+	ls = log --stat
+	lp = log -p
+
 	hist = log --graph --format='%C(yellow)%h%C(auto)%d%C(reset) %s %C(green)<%an>%C(reset)'
 
 [ghq]

@@ -1,4 +1,4 @@
-all: screen tmux zsh emacs git
+all: tmux zsh git
 
 screen:
 	ln -fs ${PWD}/.screenrc ${HOME}/.screenrc

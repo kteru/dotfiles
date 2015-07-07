@@ -36,3 +36,4 @@
 
 [ghq]
 	root = ~/repos/src
+	root = ~/go/src

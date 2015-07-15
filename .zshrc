@@ -55,10 +55,10 @@ if is-at-least 4.3.11; then
                                              git-nomergemaster-count
 
   function +vi-git-status-count() {
-    gitstatus=`git status --porcelain 2> /dev/null`
-    staged_cnt=`echo "${gitstatus}" | grep -E '^M.' | wc -l | tr -d ' '`
-    unstaged_cnt=`echo "${gitstatus}" | grep -E '^.M' | wc -l | tr -d ' '`
-    untracked_cnt=`echo "${gitstatus}" | grep -E '^\?\?' | wc -l | tr -d ' '`
+    gitstatus=$(git status --porcelain 2> /dev/null)
+    staged_cnt=$(echo "${gitstatus}" | grep -E '^M.' | wc -l | tr -d ' ')
+    unstaged_cnt=$(echo "${gitstatus}" | grep -E '^.M' | wc -l | tr -d ' ')
+    untracked_cnt=$(echo "${gitstatus}" | grep -E '^\?\?' | wc -l | tr -d ' ')
 
     if [ ${staged_cnt} -gt 0 ]; then
       hook_com[staged]+="${staged_cnt}"
@@ -72,14 +72,14 @@ if is-at-least 4.3.11; then
   }
 
   function +vi-git-stash-count() {
-    count=`git stash list 2> /dev/null | wc -l | tr -d ' '`
+    count=$(git stash list 2> /dev/null | wc -l | tr -d ' ')
     if [ ${count} -gt 0 ]; then
       hook_com[misc]+=" s${count}"
     fi
   }
 
   function +vi-git-nopush-count() {
-    count=`git rev-list remotes/origin/${hook_com[branch]}.. 2> /dev/null | wc -l | tr -d ' '`
+    count=$(git rev-list remotes/origin/${hook_com[branch]}.. 2> /dev/null | wc -l | tr -d ' ')
     if [ ${count} -gt 0 ]; then
       hook_com[misc]+=" p${count}"
     fi
@@ -90,7 +90,7 @@ if is-at-least 4.3.11; then
       return 0
     fi
 
-    count=`git rev-list master.. 2> /dev/null | wc -l | tr -d ' '`
+    count=$(git rev-list master.. 2> /dev/null | wc -l | tr -d ' ')
     if [ ${count} -gt 0 ]; then
       hook_com[misc]+=" m${count}"
     fi

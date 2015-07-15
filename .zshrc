@@ -56,8 +56,8 @@ if is-at-least 4.3.11; then
 
   function +vi-git-status-count() {
     gitstatus=$(git status --porcelain 2> /dev/null)
-    staged_cnt=$(echo "${gitstatus}" | grep -c -E '^M.')
-    unstaged_cnt=$(echo "${gitstatus}" | grep -c -E '^.M')
+    staged_cnt=$(echo "${gitstatus}" | grep -c -E '^[^ ?].')
+    unstaged_cnt=$(echo "${gitstatus}" | grep -c -E '^.[^ ?]')
     untracked_cnt=$(echo "${gitstatus}" | grep -c -E '^\?\?')
 
     if [ ${staged_cnt} -gt 0 ]; then

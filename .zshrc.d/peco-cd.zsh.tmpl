@@ -3,7 +3,12 @@ function peco-cd() {
     echo "error: peco is not found"
     return 1
   }
-  dir=$(ghq list --full-path | peco)
+
+  dir=$((
+    cat ~/.zshrc.d/peco-cd.txt
+    ghq list --full-path
+  ) | peco)
+
   if [ ! "${dir}x" = "x" ]; then
     cd "${dir}"
   fi

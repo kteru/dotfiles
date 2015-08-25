@@ -1,7 +1,7 @@
-function peco-ghq-cd() {
+function peco-cd() {
   which peco > /dev/null 2>&1 || {
     echo "error: peco is not found"
-    exit 1
+    return 1
   }
   dir=$(ghq list --full-path | peco)
   if [ ! "${dir}x" = "x" ]; then
@@ -9,5 +9,5 @@ function peco-ghq-cd() {
   fi
 }
 
-zle -N peco-ghq-cd
-bindkey "^[g" peco-ghq-cd
+zle -N peco-cd
+bindkey "^[g" peco-cd

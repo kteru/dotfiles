@@ -12,7 +12,7 @@ umask 0022
 ### completion
 ###
 # 補完を有効にする
-autoload -U compinit && compinit
+autoload -U compinit && compinit -u
 
 # 大文字を入力した場合は大文字のみマッチ
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'

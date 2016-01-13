@@ -21,6 +21,11 @@ zstyle ':completion:*' list-colors ''
 # sudo でも補完する
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin
 
+# ホスト名の補完候補
+zstyle -e ':completion:*:hosts' hosts 'reply=(
+  ${=${${${${(@M)${(f)"$(cat ~/.ssh/config 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
+)'
+
 # ウィンドウからあふれる時のみ候補表示の確認を行う
 LISTMAX=0
 

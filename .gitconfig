@@ -11,6 +11,8 @@
 	renames = true
 
 [alias]
+	rpo = remote prune origin
+
 	st = status
 	ss = status -s
 

@@ -11,6 +11,8 @@ function peco-cd() {
 
   if [ ! "${dir}x" = "x" ]; then
     cd "${dir}"
+    BUFFER=""
+    zle accept-line
   fi
 }
 

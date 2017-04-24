@@ -277,4 +277,3 @@ alias tmls='tmux list-sessions'
 for i in ${HOME}/.zshrc.d/*.zsh(N-.); do
   source "${i}"
 done
-

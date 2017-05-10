@@ -2,6 +2,14 @@
 PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/sbin:/usr/sbin
 export PATH
 
+if [ "${2}" = "" ]; then
+  (
+    echo "# The commit logs:"
+    git log --oneline -n 8 2>/dev/null | sed -e $'s/^/#\t/'
+    echo "#"
+  ) >> "${1}"
+fi
+
 exitval=0
 
 if [ "$(git config --local user.name)" = "" ]; then

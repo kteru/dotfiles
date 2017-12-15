@@ -4,13 +4,13 @@ function peco-cd() {
     return 1
   }
 
-  dir=$((
+  item=$( (
     cat ~/.zshrc.d/peco-cd.txt
     ghq list --full-path
-  ) | peco)
+  ) | peco | head -n 1)
 
-  if [ ! "${dir}x" = "x" ]; then
-    cd "${dir}"
+  if [ ! "${item}x" = "x" ]; then
+    cd "${item}"
     BUFFER=""
     zle accept-line
   fi

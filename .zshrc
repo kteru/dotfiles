@@ -59,7 +59,7 @@ if is-at-least 4.3.11; then
                                              git-nopush-count
 
   function +vi-git-status-count() {
-    gitstatus=$(git status --porcelain 2> /dev/null)
+    gitstatus=$(git status --porcelain 2>/dev/null)
     staged_cnt=$(echo "${gitstatus}" | grep -c -E '^[^ ?].')
     unstaged_cnt=$(echo "${gitstatus}" | grep -c -E '^.[^ ?]')
     untracked_cnt=$(echo "${gitstatus}" | grep -c -E '^\?\?')
@@ -76,14 +76,14 @@ if is-at-least 4.3.11; then
   }
 
   function +vi-git-stash-count() {
-    count=$(git stash list 2> /dev/null | wc -l | tr -d ' ')
+    count=$(git stash list 2>/dev/null | wc -l | tr -d ' ')
     if [ ${count} -gt 0 ]; then
       hook_com[misc]+=" s${count}"
     fi
   }
 
   function +vi-git-nopush-count() {
-    count=$(git rev-list remotes/origin/${hook_com[branch]}.. 2> /dev/null | wc -l | tr -d ' ')
+    count=$(git rev-list remotes/origin/${hook_com[branch]}.. 2>/dev/null | wc -l | tr -d ' ')
     if [ ${count} -gt 0 ]; then
       hook_com[misc]+=" p${count}"
     fi
@@ -212,13 +212,13 @@ case ${OSTYPE} in
     ;;
   freebsd*)
     alias ls='ls -G'
-    which gls > /dev/null 2>&1 && alias ls='gls --color=auto --quoting-style=literal'
+    which gls >/dev/null 2>&1 && alias ls='gls --color=auto --quoting-style=literal'
     ;;
   darwin*)
     alias ls='ls -G'
-    which gls > /dev/null 2>&1 && alias ls='gls --color=auto --quoting-style=literal'
-    which gsed > /dev/null 2>&1 && alias sed='gsed'
-    which gawk > /dev/null 2>&1 && alias awk='gawk'
+    which gls >/dev/null 2>&1 && alias ls='gls --color=auto --quoting-style=literal'
+    which gsed >/dev/null 2>&1 && alias sed='gsed'
+    which gawk >/dev/null 2>&1 && alias awk='gawk'
     alias rsync='rsync --iconv=UTF-8-MAC,UTF-8'
     alias ldd='echo Use otool -L'
     alias atom='reattach-to-user-namespace atom'

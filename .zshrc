@@ -221,7 +221,6 @@ case ${OSTYPE} in
     which gawk >/dev/null 2>&1 && alias awk='gawk'
     alias rsync='rsync --iconv=UTF-8-MAC,UTF-8'
     alias ldd='echo Use otool -L'
-    alias atom='reattach-to-user-namespace atom'
     ;;
 esac
 

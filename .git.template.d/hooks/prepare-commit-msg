@@ -5,7 +5,7 @@ export PATH
 if [ "${2}" = "" ]; then
   (
     echo "# The commit logs:"
-    git log --oneline -n 20 2>/dev/null | sed -e $'s/^/#\t/'
+    git log --oneline --no-merges -n 20 2>/dev/null | sed -e $'s/^/#\t/'
     echo "#"
   ) >> "${1}"
 fi

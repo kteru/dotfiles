@@ -1,9 +1,4 @@
 function peco-cd() {
-  which peco >/dev/null 2>&1 || {
-    echo "error: peco is not found"
-    return 1
-  }
-
   item=$( (
     cat ~/.zshrc.d/peco-cd.txt
     ghq list --full-path

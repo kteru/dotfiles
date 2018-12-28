@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+items=$( (
+  git branch --sort=-authordate --format "%(refname:short)" --merged | grep -v -E '^(master|develop)'
+) | peco)
+
+if [ ! "${items}x" = "x" ]; then
+  (
+    echo "${items}" | while read item; do
+      git branch -d "${item}"
+    done
+  )
+fi

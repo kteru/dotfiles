@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+cat <<___EOL___
+${HOME}/Downloads
+${HOME}/Pictures
+___EOL___
+
+find "${HOME}/Documents" -mindepth 0 -maxdepth 1 -type d | sort
+
+ghq list --full-path

@@ -220,6 +220,7 @@ case ${OSTYPE} in
     which gawk >/dev/null 2>&1 && alias awk='gawk'
     alias rsync='rsync --iconv=UTF-8-MAC,UTF-8'
     alias ldd='echo Use otool -L'
+    alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
     ;;
 esac
 

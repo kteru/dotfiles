@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+item=$( (
+  (
+    git branch --format "%(refname:short)"
+    git branch --remotes --format "%(refname:lstrip=3)" | grep -v -E '^HEAD'
+  ) | sort | uniq
+  git log --oneline -n 20
+  git tag --sort=-creatordate -l
+) | peco | head -n 1)
+
+if [ ! "${item}x" = "x" ]; then
+  echo "${item}" | grep -q -E '^[0-9a-f]+\s.+$'
+  if [ $? -eq 0 ]; then
+    item="${item%% *}"
+  fi
+
+  git checkout "${item}"
+fi

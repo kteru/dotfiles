@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+item=$( (
+  git branch --sort=-authordate --format "%(refname:short)" | grep -v -E '^(master|develop)'
+) | peco | head -n 1)
+
+if [ ! "${item}x" = "x" ]; then
+  git push origin "${item}"
+fi

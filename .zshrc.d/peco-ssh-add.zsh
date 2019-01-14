@@ -7,13 +7,13 @@ function peco-ssh-add() {
   if [ ! "${items}x" = "x" ]; then
     echo
     echo "${items}" | while IFS= read item; do
-      loaded="${item:0:1}"
-      keypath="${item:2}"
+      key="${item:2}"
+      is_loaded=$(test "${item:0:1}" = "*"; echo $?)
 
-      if [ "${loaded}" != "*" ]; then
-        ssh-add ${keypath}
+      if [ ${is_loaded} -ne 0 ]; then
+        ssh-add ${key}
       else
-        ssh-add -d ${keypath}
+        ssh-add -d ${key}
       fi
     done
 

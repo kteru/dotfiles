@@ -1,36 +1,37 @@
 function peco-file() {
-  item=$( (
+  items=$( (
     find -L . -mindepth 1 -maxdepth 1 -type d | sed -e 's|^..|/|' | sort
     find -L . -mindepth 1 -maxdepth 1 -type f | sed -e 's|^..| |' | sort
-  ) | peco | head -n 1)
+  ) | peco)
 
-  if [ ! "${item}x" = "x" ]; then
-    echo "${item}" | grep -q -E '^/'
-    is_dir=$?
+  if [ ! "${items}x" = "x" ]; then
+    sel_cnt=$(echo "${items}" | wc -l | tr -d ' ')
 
-    item="${item:1}"
+    echo "${items}" | while IFS= read item; do
+      file=$(printf %q "${item:1}")
+      is_dir=$(test "${item:0:1}" = "/"; echo $?)
 
-    if [ ${is_dir} -eq 0 ]; then
       if [ "${BUFFER}x" = "x" ]; then
-        cd "${item}"
-        zle accept-line
-        return
+        if [ ${sel_cnt} -eq 1 -a ${is_dir} -eq 0 ]; then
+          cd ${file}
+          zle accept-line
+          return
+        fi
+
+        case ${OSTYPE} in
+          darwin*)
+            LBUFFER+="open"
+            ;;
+          *)
+            LBUFFER+="less -S"
+        esac
       fi
-    fi
 
-    item=$(printf %q "${item}")
-    #ext=${item##*.}
-
-    if [ "${BUFFER}x" = "x" ]; then
-      case ${OSTYPE} in
-        darwin*)
-          LBUFFER+="open "
-          ;;
-        *)
-          LBUFFER+="less -S "
-      esac
-    fi
-    LBUFFER+="${item}"
+      if [ "${LBUFFER: -1}" != " " ]; then
+        LBUFFER+=" "
+      fi
+      LBUFFER+="${file}"
+    done
   fi
 }
 

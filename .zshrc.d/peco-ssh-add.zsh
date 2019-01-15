@@ -11,9 +11,9 @@ function peco-ssh-add() {
       is_loaded=$(test "${item:0:1}" = "*"; echo $?)
 
       if [ ${is_loaded} -ne 0 ]; then
-        ssh-add ${key}
+        ssh-add "${key}"
       else
-        ssh-add -d ${key}
+        ssh-add -d "${key}"
       fi
     done
 

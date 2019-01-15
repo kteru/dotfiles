@@ -76,29 +76,28 @@ if is-at-least 4.3.11; then
   }
 
   function +vi-git-stash-count() {
-    count=$(git stash list 2>/dev/null | wc -l | tr -d ' ')
-    if [ ${count} -gt 0 ]; then
+    count=$(cat ${hook_com[base]}/.git/logs/refs/stash 2>/dev/null | grep -c '')
+    if [ ${count:-0} -gt 0 ]; then
       hook_com[misc]+=" s${count}"
     fi
   }
 
   function +vi-git-nopush-count() {
-    count=$(git rev-list remotes/origin/${hook_com[branch]}.. 2>/dev/null | wc -l | tr -d ' ')
-    if [ ${count} -gt 0 ]; then
+    count=$(git rev-list remotes/origin/${hook_com[branch]}.. 2>/dev/null | grep -c '')
+    if [ ${count:-0} -gt 0 ]; then
       hook_com[misc]+=" p${count}"
     fi
   }
 fi
 
-# 一般ユーザ
-PROMPT='%{${fg[green]}%}[%n@%m %1~]%#%{${reset_color}%} '
-RPROMPT='${vcs_info_msg_0_}%{${fg[green]}%}[%50<...<%/]%{${reset_color}%}'
-
-# root
-if [ ${UID} = 0 ]; then
-  PROMPT='%{${fg[yellow]}%}[%n@%m %1~]%#%{${reset_color}%} '
-  RPROMPT='${vcs_info_msg_0_}%{${fg[yellow]}%}[%50<...<%/]%{${reset_color}%}'
+prompt_color=${fg[green]}
+if [ ${UID} -eq 0 ]; then
+  # root
+  prompt_color=${fg[yellow]}
 fi
+
+PROMPT='%{${prompt_color}%}[%n@%m %1~]%#%{${reset_color}%} '
+RPROMPT='${vcs_info_msg_0_}%{${prompt_color}%}[%50<...<%/]%{${reset_color}%}'
 
 # precmd
 if [[ ${TERM} == [xk]term* || ${TERM} == screen ]]; then
@@ -118,7 +117,7 @@ HISTSIZE=50000
 SAVEHIST=50000
 
 ## root の時にはヒストリ保存しない
-#if [ ${UID} = 0 ]; then
+#if [ ${UID} -eq 0 ]; then
 #  unset HISTFILE
 #  SAVEHIST=0
 #fi

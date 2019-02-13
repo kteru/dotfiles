@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+repository=$( (
+  git remote
+) | peco --select-1 --prompt '(repository) QUERY>' | head -n 1)
+
+refspec=$( (
+  git branch --sort=-authordate --format "%(refname:short)" | grep -v -E '^(master|develop)'
+) | peco --prompt '(refspec) QUERY>' | head -n 1)
+
+if [ ! "${repository}x" = "x" -a ! "${refspec}x" = "x" ]; then
+  git push "${repository}" "${refspec}"
+fi

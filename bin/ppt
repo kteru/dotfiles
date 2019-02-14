@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-pt -Sf "$@" | peco --query "$@" --exec 'awk -F : '"'"'{print "+" $2 " " $1}'"'"' | xargs less -N -S '
+pt -Sf "$@" | peco --query "$@ " --exec 'awk -F : '"'"'{print "+" $2 " " $1}'"'"' | xargs less -N -S '

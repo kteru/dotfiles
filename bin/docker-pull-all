@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+docker images --format '{{.Repository}}:{{.Tag}}' | grep -v ':<none>' | while read image; do
+  echo "==> ${image}"
+  docker pull ${image}
+done

@@ -73,16 +73,16 @@ if is-at-least 4.3.11; then
   }
 
   function +vi-git-stash-count() {
-    count=$(cat ${hook_com[base]}/.git/logs/refs/stash 2>/dev/null | grep -c '')
-    if [ ${count:-0} -gt 0 ]; then
-      hook_com[misc]+=" s${count}"
+    stashed_cnt=$(cat ${hook_com[base]}/.git/logs/refs/stash 2>/dev/null | grep -c '')
+    if [ ${stashed_cnt:-0} -gt 0 ]; then
+      hook_com[misc]+=" s${stashed_cnt}"
     fi
   }
 
   function +vi-git-nopush-count() {
-    count=$(git rev-list remotes/origin/${hook_com[branch]}.. 2>/dev/null | grep -c '')
-    if [ ${count:-0} -gt 0 ]; then
-      hook_com[misc]+=" p${count}"
+    nopush_cnt=$(git rev-list remotes/origin/${hook_com[branch]}.. 2>/dev/null | grep -c '')
+    if [ ${nopush_cnt:-0} -gt 0 ]; then
+      hook_com[misc]+=" p${nopush_cnt}"
     fi
   }
 fi

@@ -13,6 +13,7 @@
 
 [diff]
 	renames = true
+	renameLimit = 0
 
 [alias]
 	rpo = remote prune origin

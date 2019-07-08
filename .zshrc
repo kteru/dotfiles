@@ -48,12 +48,15 @@ setopt prompt_subst
 autoload -U vcs_info
 autoload -U is-at-least
 zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git:*' formats '%c%u%m [%b]'
-zstyle ':vcs_info:git:*' actionformats '%c%u%m [%b|%a]'
+zstyle ':vcs_info:git:*' formats '%c%u%m [%b%i]'
+zstyle ':vcs_info:git:*' actionformats '%c%u%m [%b%i|%a]'
+
 if is-at-least 4.3.11; then
-  zstyle ':vcs_info:git+set-message:*' hooks git-status-count \
-                                             git-stash-count \
-                                             git-nopush-count
+  zstyle ':vcs_info:git+set-message:*' hooks \
+    git-status-count \
+    git-stash-count \
+    git-nopush-count \
+    git-revision
 
   function +vi-git-status-count() {
     gitstatus=$(git status --porcelain 2>/dev/null)
@@ -83,6 +86,13 @@ if is-at-least 4.3.11; then
     nopush_cnt=$(git rev-list remotes/origin/${hook_com[branch]}.. 2>/dev/null | grep -c '')
     if [ ${nopush_cnt:-0} -gt 0 ]; then
       hook_com[misc]+=" p${nopush_cnt}"
+    fi
+  }
+
+  function +vi-git-revision() {
+    rev=$(git rev-parse --short HEAD 2>/dev/null)
+    if [ -n "${rev}" ]; then
+      hook_com[revision]="|${rev}"
     fi
   }
 fi

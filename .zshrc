@@ -48,8 +48,8 @@ setopt prompt_subst
 autoload -U vcs_info
 autoload -U is-at-least
 zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git:*' formats '%c%u%m [%b%i]'
-zstyle ':vcs_info:git:*' actionformats '%c%u%m [%b%i|%a]'
+zstyle ':vcs_info:git:*' formats '%c%u%m[%b%i]'
+zstyle ':vcs_info:git:*' actionformats '%c%u%m[%b%i|%a]'
 
 if is-at-least 4.3.11; then
   zstyle ':vcs_info:git+set-message:*' hooks \
@@ -65,27 +65,27 @@ if is-at-least 4.3.11; then
     untracked_cnt=$(echo "${gitstatus}" | grep -c -E '^\?\?')
 
     if [ ${staged_cnt} -gt 0 ]; then
-      hook_com[staged]+=" +${staged_cnt}"
+      hook_com[staged]+="+${staged_cnt} "
     fi
     if [ ${unstaged_cnt} -gt 0 ]; then
-      hook_com[unstaged]+=" *${unstaged_cnt}"
+      hook_com[unstaged]+="*${unstaged_cnt} "
     fi
     if [ ${untracked_cnt} -gt 0 ]; then
-      hook_com[misc]+=" ?${untracked_cnt}"
+      hook_com[misc]+="?${untracked_cnt} "
     fi
   }
 
   function +vi-git-stash-count() {
     stashed_cnt=$(cat ${hook_com[base]}/.git/logs/refs/stash 2>/dev/null | grep -c '')
     if [ ${stashed_cnt:-0} -gt 0 ]; then
-      hook_com[misc]+=" s${stashed_cnt}"
+      hook_com[misc]+="s${stashed_cnt} "
     fi
   }
 
   function +vi-git-nopush-count() {
     nopush_cnt=$(git rev-list remotes/origin/${hook_com[branch]}.. 2>/dev/null | grep -c '')
     if [ ${nopush_cnt:-0} -gt 0 ]; then
-      hook_com[misc]+=" p${nopush_cnt}"
+      hook_com[misc]+="p${nopush_cnt} "
     fi
   }
 

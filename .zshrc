@@ -95,7 +95,18 @@ setopt noautoremoveslash
 ### Prompt
 ###
 
+autoload -U add-zsh-hook
+
+### Colorize
+
 autoload -U colors && colors
+
+prompt_color=${fg[green]}
+if [ ${UID} -eq 0 ]; then
+  prompt_color=${fg[yellow]}
+fi
+
+### vcs_info
 
 autoload -U vcs_info
 zstyle ':vcs_info:*' enable git
@@ -149,22 +160,27 @@ if is-at-least 4.3.11; then
   }
 fi
 
-prompt_color=${fg[green]}
-if [ ${UID} -eq 0 ]; then
-  prompt_color=${fg[yellow]}
-fi
+precmd_vcs_info() {
+  vcs_info
+}
+
+add-zsh-hook precmd precmd_vcs_info
+
+### Terminal title
+
+precmd_terminal_title() {
+  if [[ ${TERM} == [xk]term* || ${TERM} == screen ]]; then
+    # user@host:~/dir
+    echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD/~HOME/~}\007"
+  fi
+}
+
+add-zsh-hook precmd precmd_terminal_title
+
+### Prompt
 
 PROMPT='%{${prompt_color}%}[%n@%m %1~]%#%{${reset_color}%} '
 RPROMPT='${vcs_info_msg_0_}%{${prompt_color}%}[%50<...<%/]%{${reset_color}%}'
-
-# precmd
-if [[ ${TERM} == [xk]term* || ${TERM} == screen ]]; then
-  precmd() {
-    vcs_info
-    # Terminal title: user@host:~/dir
-    echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD/~HOME/~}\007"
-  }
-fi
 
 
 ###

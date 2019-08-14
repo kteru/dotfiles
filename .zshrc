@@ -1,6 +1,7 @@
 ###
-### ENV
+### Environment
 ###
+
 export LANG=ja_JP.UTF-8
 export LC_TIME=C
 export LC_MESSAGES=C
@@ -9,48 +10,99 @@ umask 0022
 
 
 ###
-### completion
+### General
 ###
-# 補完を有効にする
+
+WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+
+# No beep
+setopt no_beep
+setopt nolistbeep
+
+# Changing directories without cd
+setopt auto_cd
+# Automatically pushd
+setopt auto_pushd
+# Ignore dups when doing pushd
+setopt pushd_ignore_dups
+
+# Spelling correction for commands
+setopt correct
+# List with less lines
+setopt list_packed
+# Print eight bit characters
+setopt print_eight_bit
+# Report background jobs status immediately
+setopt notify
+# Remove RPROMPT when accepting a command line
+setopt transient_rprompt
+# Enable substitutions in prompts
+setopt prompt_subst
+
+
+###
+### History
+###
+
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+
+# Append to the history file rather than replace
+setopt append_history
+# Append to the history immediately
+setopt inc_append_history
+# Share history
+setopt share_history
+# Do not enter into the history when same of the previous command
+setopt hist_ignore_dups
+# Do not enter into the history when beginning a space
+setopt hist_ignore_space
+# Remove older same histories
+setopt hist_ignore_all_dups
+# Do not execute when history expansion
+setopt hist_verify
+
+
+###
+### Completion
+###
+
 autoload -U compinit && compinit -u
 
-# 大文字を入力した場合は大文字のみマッチ
+# Smart completion
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
-# 補完候補をカラー表示
+# Colorize completion list
 zstyle ':completion:*' list-colors ''
-# sudo でも補完する
-zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin
 
-# ホスト名の補完候補
+# sudo completion
+zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin
+# hosts completion
 zstyle -e ':completion:*:hosts' hosts 'reply=(
   ${=${${${${(@M)${(f)"$(cat ~/.ssh/config 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
 )'
 
-# ウィンドウからあふれる時のみ候補表示の確認を行う
+# Ask only if the top of the listing would scroll off the screen
 LISTMAX=0
 
-# "=" 以降も保管できる
+# Expand for after `=`
 setopt magic_equal_subst
-# 末尾のスラッシュを自動削除しない
+# No remove postfix slash
 setopt noautoremoveslash
 
 
 ###
-### display
+### Prompt
 ###
-# 色
+
 autoload -U colors && colors
 
-# プロンプトにエスケープシーケンスを通す
-setopt prompt_subst
-
-# vcs_info を有効にする
 autoload -U vcs_info
-autoload -U is-at-least
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:*' formats '%c%u%m[%b%i]'
 zstyle ':vcs_info:git:*' actionformats '%c%u%m[%b%i|%a]'
 
+autoload -U is-at-least
 if is-at-least 4.3.11; then
   zstyle ':vcs_info:git+set-message:*' hooks \
     git-status-count \
@@ -99,7 +151,6 @@ fi
 
 prompt_color=${fg[green]}
 if [ ${UID} -eq 0 ]; then
-  # root
   prompt_color=${fg[yellow]}
 fi
 
@@ -110,74 +161,16 @@ RPROMPT='${vcs_info_msg_0_}%{${prompt_color}%}[%50<...<%/]%{${reset_color}%}'
 if [[ ${TERM} == [xk]term* || ${TERM} == screen ]]; then
   precmd() {
     vcs_info
-    # ターミナルタイトル表示 user@host:~/dir
+    # Terminal title: user@host:~/dir
     echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD/~HOME/~}\007"
   }
 fi
 
 
 ###
-### history
+### Keybind
 ###
-HISTFILE=~/.zsh_history
-HISTSIZE=50000
-SAVEHIST=50000
 
-## root の時にはヒストリ保存しない
-#if [ ${UID} -eq 0 ]; then
-#  unset HISTFILE
-#  SAVEHIST=0
-#fi
-
-# ヒストリファイルに上書きせず追加する
-setopt append_history
-# 履歴をインクリメンタルに追加
-setopt inc_append_history
-# 履歴の共有
-setopt share_history
-# 直前と同じコマンドは追加しない
-setopt hist_ignore_dups
-# スペースから始まるコマンドは追加しない
-setopt hist_ignore_space
-# 重複したコマンドは過去の物を削除
-setopt hist_ignore_all_dups
-# ヒストリ実行前に一旦編集できる状態にする
-setopt hist_verify
-
-
-###
-### setting
-###
-# ビープしない
-setopt no_beep
-setopt nolistbeep
-
-# cd 無しでも移動
-setopt auto_cd
-# 自動で pushd する
-setopt auto_pushd
-# 重複するディレクトリは push しない
-setopt pushd_ignore_dups
-
-# コマンド訂正
-setopt correct
-# リストのコンパクト表示
-setopt list_packed
-# 8bit 目を通す
-setopt print_eight_bit
-# ジョブの状態を直ちに知らせる
-setopt notify
-# コマンド実行後 RPROMPT を消す
-setopt transient_rprompt
-
-# 単語区切り文字
-WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
-
-
-###
-### bindkey
-###
-# emacs 風キーバインド
 bindkey -e
 
 # Delete
@@ -187,17 +180,17 @@ bindkey "^[[1~" beginning-of-line
 # End
 bindkey "^[[4~" end-of-line
 
-# shift-tab - 戻って補完する
+# Shift-Tab
 bindkey "\e[Z" reverse-menu-complete
-# C-p/n - 履歴検索
+# Ctrl-p/n
 bindkey "^p" history-beginning-search-backward
 bindkey "^n" history-beginning-search-forward
 
 
 ###
-### alias
+### Alias
 ###
-# alias でも補完する
+
 setopt complete_aliases
 
 alias rm='rm -i'
@@ -209,7 +202,6 @@ alias mysql='mysql --auto-rehash'
 alias emacs='emacs -nw'
 alias vls='virsh list --all'
 
-# OS 毎の設定
 case ${OSTYPE} in
   linux*)
     alias ls='ls --color=auto'
@@ -232,9 +224,9 @@ esac
 
 
 ###
-### function
+### Function
 ###
-# ファイル暗号化
+
 function encrypt() {
   if [ "${1}x" = "${2}x" ]; then
     echo "error: same file"
@@ -243,7 +235,6 @@ function encrypt() {
   openssl enc -e -aes256 -in ${1} -out ${2}
 }
 
-# ファイル復号化
 function decrypt() {
   if [ "${1}x" = "${2}x" ]; then
     echo "error: same file"
@@ -252,16 +243,16 @@ function decrypt() {
   openssl enc -d -aes256 -in ${1} -out ${2}
 }
 
-# s_client
 function stelnet() {
   openssl s_client -connect ${1}:${2}
 }
 
 
 ###
-### for tmux
+### For tmux
 ###
-# 既にセッションがある時はアタッチ・無いときは新規作成
+
+# Attach to the existing session or new
 function tm() {
   if [ -n "${1}" ]; then
     tmux -2 attach-session -t ${1} || \
@@ -272,13 +263,14 @@ function tm() {
   fi
 }
 
-# セッションをリストアップ
 alias tmls='tmux list-sessions'
 
 
 ###
-### load other setting
+### Include
 ###
+
+# Load from ~/.zshrc.d/*.zsh
 for i in ${HOME}/.zshrc.d/*.zsh(N-.); do
   source "${i}"
 done

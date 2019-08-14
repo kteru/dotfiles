@@ -169,6 +169,31 @@ add-zsh-hook precmd precmd_vcs_info
 
 RPROMPT='${vcs_info_msg_0_}'${RPROMPT}
 
+### Execution time
+
+exec_time_msg=""
+
+preexec_exec_time() {
+  exec_time_start=$(date '+%s')
+}
+
+precmd_exec_time() {
+  exec_time_msg=""
+  if [ -n "${exec_time_start}" ]; then
+    exec_time_stop=$(date '+%s')
+    exec_elapsed=$((exec_time_stop-exec_time_start))
+    exec_time_start=""
+    if [ ${exec_elapsed} -ge 3 ]; then
+      exec_time_msg="%{${prompt_color}%}(${exec_elapsed}s)%{${reset_color}%} "
+    fi
+  fi
+}
+
+add-zsh-hook preexec preexec_exec_time
+add-zsh-hook precmd precmd_exec_time
+
+RPROMPT='${exec_time_msg}'${RPROMPT}
+
 ### Terminal title
 
 precmd_terminal_title() {

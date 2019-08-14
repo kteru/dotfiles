@@ -95,16 +95,17 @@ setopt noautoremoveslash
 ### Prompt
 ###
 
-autoload -U add-zsh-hook
-
-### Colorize
-
 autoload -U colors && colors
 
 prompt_color=${fg[green]}
 if [ ${UID} -eq 0 ]; then
   prompt_color=${fg[yellow]}
 fi
+
+PROMPT='%{${prompt_color}%}[%n@%m %1~]%#%{${reset_color}%} '
+RPROMPT='%{${prompt_color}%}[%50<...<%/]%{${reset_color}%}'
+
+autoload -U add-zsh-hook
 
 ### vcs_info
 
@@ -166,6 +167,8 @@ precmd_vcs_info() {
 
 add-zsh-hook precmd precmd_vcs_info
 
+RPROMPT='${vcs_info_msg_0_}'${RPROMPT}
+
 ### Terminal title
 
 precmd_terminal_title() {
@@ -176,11 +179,6 @@ precmd_terminal_title() {
 }
 
 add-zsh-hook precmd precmd_terminal_title
-
-### Prompt
-
-PROMPT='%{${prompt_color}%}[%n@%m %1~]%#%{${reset_color}%} '
-RPROMPT='${vcs_info_msg_0_}%{${prompt_color}%}[%50<...<%/]%{${reset_color}%}'
 
 
 ###

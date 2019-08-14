@@ -46,3 +46,6 @@
 [ghq]
 	root = ~/repos/src
 	root = ~/go/src
+
+[include]
+	path = ~/.gitconfig_local

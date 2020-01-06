@@ -44,8 +44,8 @@
 	mergeable = !git format-patch --stdout $(git rev-parse --abbrev-ref HEAD)..$(git rev-parse --abbrev-ref ${1}) | git apply --check && echo ok
 
 [ghq]
-	root = ~/repos/src
 	root = ~/go/src
+	root = ~/repos/src
 
 [include]
 	path = ~/.gitconfig_local

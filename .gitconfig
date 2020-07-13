@@ -8,6 +8,10 @@
 [color]
 	ui = auto
 
+[pull]
+	rebase = false
+	ff = only
+
 [grep]
 	lineNumber = true
 

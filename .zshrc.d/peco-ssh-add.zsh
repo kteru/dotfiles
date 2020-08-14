@@ -1,6 +1,6 @@
 function peco-ssh-add() {
   items=$( (
-    grep -IRl "BEGIN RSA PRIVATE KEY" ~/.ssh
+    grep -IRlE "BEGIN .* PRIVATE KEY" ~/.ssh
     ssh-add -l | grep -v "The agent has no identities." | awk '{print $3}'
   ) | sort | uniq -c | sed -e 's/^\s*1\s*/  /' -e 's/^\s*[23]\s*/* /' | peco)
 

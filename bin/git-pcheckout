@@ -9,11 +9,13 @@ item=$( (
   git tag --sort=-creatordate -l
 ) | peco | head -n 1)
 
-if [ ! "${item}x" = "x" ]; then
-  echo "${item}" | grep -q -E '^[0-9a-f]+\s.+$'
-  if [ $? -eq 0 ]; then
-    item="${item%% *}"
-  fi
-
-  git checkout "${item}"
+if [ -z "${item}" ]; then
+  exit 0
 fi
+
+echo "${item}" | grep -q -E '^[0-9a-f]+\s.+$'
+if [ $? -eq 0 ]; then
+  item="${item%% *}"
+fi
+
+git checkout "${item}"

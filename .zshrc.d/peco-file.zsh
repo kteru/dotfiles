@@ -1,10 +1,16 @@
 function peco-file() {
+  WORD="${LBUFFER##* }"
+
   items=$( (
     find -L . -mindepth 1 -maxdepth 1 -type d | sed -e 's|^..|/|' | sort
     find -L . -mindepth 1 -maxdepth 1 -type f | sed -e 's|^..| |' | sort
-  ) | peco)
+  ) | peco --query "${WORD}")
 
   if [ ! "${items}x" = "x" ]; then
+    if [ ${#WORD} -gt 0 ]; then
+      LBUFFER="${LBUFFER:0:-${#WORD}}"
+    fi
+
     sel_cnt=$(echo "${items}" | wc -l | tr -d ' ')
 
     echo "${items}" | while IFS= read item; do

@@ -4,11 +4,13 @@ items=$( (
   git status --porcelain --untracked-files 2>/dev/null | grep -E '^.[^ ]'
 ) | peco | sed -e 's/^...//')
 
-if [ ! "${items}x" = "x" ]; then
-  (
-    cd "$(git rev-parse --show-toplevel 2>/dev/null)"
-    echo "${items}" | while read item; do
-      git add "${item}"
-    done
-  )
+if [ -z "${items}" ]; then
+  exit 0
 fi
+
+(
+  cd "$(git rev-parse --show-toplevel 2>/dev/null)"
+  while read item; do
+    git add "${item}"
+  done < <(echo "${items}")
+)

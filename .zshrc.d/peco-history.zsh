@@ -3,10 +3,12 @@ function peco-history() {
     history -n 1 | tail -r
   ) | peco --layout bottom-up --query "${BUFFER}" | head -n 1)
 
-  if [ ! "${item}x" = "x" ]; then
-    BUFFER="${item}"
-    CURSOR=${#BUFFER}
+  if [ -z "${item}" ]; then
+    return 0
   fi
+
+  BUFFER="${item}"
+  CURSOR=${#BUFFER}
 }
 
 zle -N peco-history

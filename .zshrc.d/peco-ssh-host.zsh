@@ -1,14 +1,22 @@
 function peco-ssh-host() {
+  WORD="${LBUFFER##* }"
+
   item=$( (
     cat ~/.ssh/config | sed -ne 's/^Host\s\s*//p' | sed -e 's/\s\s*/\n/g' | grep -v '*' | sort
-  ) | peco | head -n 1)
+  ) | peco --query "${WORD}" | head -n 1)
 
-  if [ ! "${item}x" = "x" ]; then
-    if [ "${BUFFER}x" = "x" ]; then
-      LBUFFER+="ssh "
-    fi
-    LBUFFER+="${item}"
+  if [ -z "${item}" ]; then
+    return 0
   fi
+
+  if [ ${#WORD} -gt 0 ]; then
+    LBUFFER="${LBUFFER:0:-${#WORD}}"
+  fi
+
+  if [ "${BUFFER}x" = "x" ]; then
+    LBUFFER+="ssh "
+  fi
+  LBUFFER+="${item}"
 }
 
 zle -N peco-ssh-host

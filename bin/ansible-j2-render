@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+if [ ${#} -eq 0 ]; then
+  echo "Usage: ${BASH_SOURCE[0]##*/} template.j2 [env.yml ...]" >&2
+  exit 1
+fi
+
+TEMPLATE_SRC="${1}"
+
+TEMPLATE_DEST="$(mktemp -q)"
+if [ ${?} -ne 0 ]; then
+  echo "Can't create temp file, exiting..." >&2
+  exit 1
+fi
+trap 'rm "${TEMPLATE_DEST}"' EXIT
+
+ANSIBLE_OPTS=""
+for envfile in "${@:2}"; do
+  ANSIBLE_OPTS="${ANSIBLE_OPTS} -e @${envfile}"
+done
+
+out=$(ansible localhost -i /dev/null -m template -a "src=${TEMPLATE_SRC} dest=${TEMPLATE_DEST}" ${ANSIBLE_OPTS} 2>&1)
+ret=${?}
+if [ ${ret} -ne 0 ]; then
+  echo "${out}" >&2
+  exit ${ret}
+fi
+
+cat "${TEMPLATE_DEST}"

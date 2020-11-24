@@ -43,7 +43,7 @@
 	ls = log --stat
 	lp = log -p
 
-	hist = log --graph --format='%C(yellow)%h%C(auto)%d%C(reset) %s %C(green)<%an>%C(reset)'
+	hist = log --graph --date=iso8601 --pretty='format:%C(yellow)%h%C(reset) %C(magenta)[%ad]%C(reset)%C(auto)%d%C(reset) %s %C(green)<%an>%C(reset)'
 
 	mergeable = !git format-patch --stdout $(git rev-parse --abbrev-ref HEAD)..$(git rev-parse --abbrev-ref ${1}) | git apply --check && echo ok
 

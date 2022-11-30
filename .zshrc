@@ -103,7 +103,15 @@ if [ ${UID} -eq 0 ]; then
 fi
 
 PROMPT='%{${prompt_color}%}[%n@%m %1~]%#%{${reset_color}%} '
-RPROMPT='%{${prompt_color}%}[%50<...<%/]%{${reset_color}%}'
+
+case ${OSTYPE} in
+  darwin*)
+    current_arch=$(uname -m)
+    RPROMPT='%{${prompt_color}%}(${current_arch})[%50<...<%/]%{${reset_color}%}'
+    ;;
+  *)
+    RPROMPT='%{${prompt_color}%}[%50<...<%/]%{${reset_color}%}'
+esac
 
 autoload -U add-zsh-hook
 

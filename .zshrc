@@ -45,8 +45,8 @@ setopt prompt_subst
 ###
 
 HISTFILE=~/.zsh_history
-HISTSIZE=50000
-SAVEHIST=50000
+HISTSIZE=100000
+SAVEHIST=100000
 
 # Append to the history file rather than replace
 setopt append_history

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 items=$( (
-  git branch --sort=-authordate --format "%(refname:short)" --merged | grep -v -E '^(master|develop)'
+  git branch --sort=-authordate --format "%(refname:short)" --merged | grep -v -E '^(main|master|develop)'
 ) | peco)
 
 if [ -z "${items}" ]; then

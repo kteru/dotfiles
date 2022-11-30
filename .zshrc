@@ -45,8 +45,8 @@ setopt prompt_subst
 ###
 
 HISTFILE=~/.zsh_history
-HISTSIZE=50000
-SAVEHIST=50000
+HISTSIZE=100000
+SAVEHIST=100000
 
 # Append to the history file rather than replace
 setopt append_history
@@ -103,7 +103,15 @@ if [ ${UID} -eq 0 ]; then
 fi
 
 PROMPT='%{${prompt_color}%}[%n@%m %1~]%#%{${reset_color}%} '
-RPROMPT='%{${prompt_color}%}[%50<...<%/]%{${reset_color}%}'
+
+case ${OSTYPE} in
+  darwin*)
+    current_arch=$(uname -m)
+    RPROMPT='%{${prompt_color}%}(${current_arch})[%50<...<%/]%{${reset_color}%}'
+    ;;
+  *)
+    RPROMPT='%{${prompt_color}%}[%50<...<%/]%{${reset_color}%}'
+esac
 
 autoload -U add-zsh-hook
 

@@ -9,7 +9,7 @@ if [ -z "${repository}" ]; then
 fi
 
 refspec=$( (
-  git branch --sort=-authordate --format "%(refname:short)" | grep -v -E '^(master|develop)'
+  git branch --sort=-authordate --format "%(refname:short)" | grep -v -E '^(main|master|develop)'
 ) | peco --prompt '(refspec) QUERY>' | head -n 1)
 
 if [ -z "${refspec}" ]; then

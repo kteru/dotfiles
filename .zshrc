@@ -261,6 +261,7 @@ case ${OSTYPE} in
   darwin*)
     alias ls='ls -G'
     which gls >/dev/null 2>&1 && alias ls='gls --color=auto --quoting-style=literal'
+    which ggrep >/dev/null 2>&1 && alias grep='ggrep'
     which gsed >/dev/null 2>&1 && alias sed='gsed'
     which gawk >/dev/null 2>&1 && alias awk='gawk'
     alias rsync='rsync --iconv=UTF-8-MAC,UTF-8'

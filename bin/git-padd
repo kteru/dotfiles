@@ -2,7 +2,7 @@
 
 items=$( (
   git status --porcelain --untracked-files 2>/dev/null | grep -E '^.[^ ]'
-) | peco | sed -e 's/^...//')
+) | peco --query "$@ " | sed -e 's/^...//')
 
 if [ -z "${items}" ]; then
   exit 0

@@ -186,11 +186,11 @@ preexec_exec_time() {
 }
 
 precmd_exec_time() {
-  exec_time_msg=""
   if [ -n "${exec_time_start}" ]; then
     exec_time_stop=$(date '+%s')
     exec_elapsed=$((exec_time_stop-exec_time_start))
     exec_time_start=""
+    exec_time_msg=""
     if [ ${exec_elapsed} -ge 3 ]; then
       exec_time_msg="%{${prompt_color}%}(${exec_elapsed}s)%{${reset_color}%} "
     fi

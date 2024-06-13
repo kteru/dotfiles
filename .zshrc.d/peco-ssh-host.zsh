@@ -2,7 +2,7 @@ function peco-ssh-host() {
   WORD="${LBUFFER##* }"
 
   item=$( (
-    cat ~/.ssh/config | sed -ne 's/^Host\s\s*//p' | sed -e 's/\s\s*/\n/g' | grep -v '*' | sort
+    cat ~/.ssh/config | sed -ne 's/^Host  *//p' | sed -e 's/  */\n/g' | grep -v '*' | sort
   ) | peco --query "${WORD}" | head -n 1)
 
   if [ -z "${item}" ]; then

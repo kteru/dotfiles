@@ -2,7 +2,7 @@ function peco-file() {
   WORD="${LBUFFER##* }"
 
   items=$( (
-    find -L . -mindepth 1 -maxdepth 1 -type d | sed -e 's|^..|/|' | sort
+    find -L . -mindepth 1 -maxdepth 3 -type d -not -path '*/.git/*' | sed -e 's|^..|/|' | sort
     find -L . -mindepth 1 -maxdepth 1 -type f | sed -e 's|^..| |' | sort
   ) | peco --query "${WORD}")
 

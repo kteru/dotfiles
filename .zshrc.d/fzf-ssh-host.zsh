@@ -1,9 +1,9 @@
-function peco-ssh-host() {
+function fzf-ssh-host() {
   WORD="${LBUFFER##* }"
 
   item=$( (
     cat ~/.ssh/config | sed -ne 's/^Host  *//p' | sed -e 's/  */\n/g' | grep -v '*' | sort
-  ) | peco --query "${WORD}" | head -n 1)
+  ) | fzf --reverse --query "${WORD}" --preview "cat ~/.ssh/config | grep -v -E '^(\s*|#.*)$' | sed -E -ne '/^Host(  *| .* ){} *$/,/^[^ ]/p' | sed -e '\$d'")
 
   if [ -z "${item}" ]; then
     return 0
@@ -19,5 +19,5 @@ function peco-ssh-host() {
   LBUFFER+="${item}"
 }
 
-zle -N peco-ssh-host
-bindkey "^[h" peco-ssh-host
+zle -N fzf-ssh-host
+bindkey "^[h" fzf-ssh-host

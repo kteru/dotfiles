@@ -3,7 +3,7 @@ function fzf-ssh-host() {
 
   item=$( (
     cat ~/.ssh/config | sed -ne 's/^Host  *//p' | sed -e 's/  */\n/g' | grep -v '*' | sort
-  ) | fzf --reverse --query "${WORD}" --preview "cat ~/.ssh/config | grep -v -E '^(\s*|#.*)$' | sed -E -ne '/^Host( *| .*) {}( *| .*)$/,/^[^ ]/p' | sed -e '\$d'")
+  ) | fzf --query "${WORD}" --preview "cat ~/.ssh/config | grep -v -E '^(\s*|#.*)$' | sed -E -ne '/^Host( *| .*) {}( *| .*)$/,/^[^ ]/p' | sed -e '\$d'")
 
   if [ -z "${item}" ]; then
     return 0

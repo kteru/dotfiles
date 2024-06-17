@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+pt -Sf "$*" | \
+fzf --query "$*" --delimiter : --preview-window down,50%,+{2}-5 --preview "cat -n {1} | grep --color=always -E '^\s*{2}\s.*|^'"

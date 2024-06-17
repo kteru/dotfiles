@@ -8,6 +8,4 @@ if [ -z "${items}" ]; then
   exit 0
 fi
 
-while read item; do
-  git branch -d "${item}"
-done < <(echo "${items}")
+echo "${items}" | xargs git branch -d

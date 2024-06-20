@@ -1,8 +1,12 @@
 function peco-ssh-add() {
-  items=$( (
-    grep -D skip -IRlE "BEGIN .* PRIVATE KEY" ~/.ssh
-    ssh-add -l | grep -v "The agent has no identities." | awk '{print $3}'
-  ) | sort | uniq -c | sed -e 's/^ *1 */  /' -e 's/^ *[23] */* /' | peco)
+  items=$(
+    (
+      grep -D skip -IRlE "BEGIN .* PRIVATE KEY" ~/.ssh
+      ssh-add -l | grep -v "The agent has no identities." | awk '{print $3}'
+    ) | \
+    sort | uniq -c | sed -e 's/^ *1 */  /' -e 's/^ *[23] */* /' | \
+    peco
+  )
 
   if [ -z "${items}" ]; then
     return 0

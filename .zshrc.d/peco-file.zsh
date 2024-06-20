@@ -2,8 +2,8 @@ function peco-file() {
   WORD="${LBUFFER##* }"
 
   items=$( (
-    find -L . -mindepth 1 -maxdepth 3 -type d -not -path '*/.git/*' | sed -e 's|^..|/|' | sort
-    find -L . -mindepth 1 -maxdepth 1 -type f | sed -e 's|^..| |' | sort
+    find -L . -mindepth 1 -maxdepth 3 -type d -not -path '*/.git/*' 2>/dev/null | sed -e 's|^..|/|' | sort
+    find -L . -mindepth 1 -maxdepth 1 -type f 2>/dev/null | sed -e 's|^..| |' | sort
   ) | peco --query "${WORD}")
 
   if [ -z "${items}" ]; then
@@ -14,7 +14,7 @@ function peco-file() {
     LBUFFER="${LBUFFER:0:-${#WORD}}"
   fi
 
-  num_items=$(echo "${items}" | wc -l | tr -d ' ')
+  num_items=$(echo "${items}" | grep -c '')
 
   while IFS= read item; do
     file=$(printf %q "${item:1}")

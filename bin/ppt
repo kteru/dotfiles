@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-pt -Sf "$*" | \
+pt -Sf --hidden "$*" | \
 peco --query "$*" --exec 'awk -F : '"'"'{print "+" $2 " " $1}'"'"' | xargs less -N -S '

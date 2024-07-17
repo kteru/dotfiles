@@ -1,10 +1,20 @@
 function fzf-file() {
   WORD="${LBUFFER##* }"
 
-  items=$( (
-    find -L . -mindepth 1 -maxdepth 3 -type d -not -path '*/.git/*' 2>/dev/null | sed -e 's|$|/|' | sort
-    find -L . -mindepth 1 -maxdepth 3 -type f 2>/dev/null | sort
-  ) | cut -c 3- | fzf --multi --query "${WORD}" --preview-window down,33% --preview "ls -lAh --color {}")
+  items=$(
+    (
+      find -L . -mindepth 1 -maxdepth 3 -type d -not -path '*/.git/*' 2>/dev/null | sed -e 's|$|/|' | sort
+      find -L . -mindepth 1 -maxdepth 3 -type f 2>/dev/null | sort
+    ) | \
+    cut -c 3- | \
+    fzf --multi --query "${WORD}" --preview-window down,33% --preview 'f() {
+      if [ -d "$1" ]; then
+        ls -lAh --color "$1"
+      else
+        less -S "$1"
+      fi
+    }; f {}'
+  )
 
   if [ -z "${items}" ]; then
     return 0

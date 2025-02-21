@@ -1,1 +1,1 @@
-export FZF_DEFAULT_OPTS="--layout reverse --no-mouse --cycle --bind ctrl-j:jump --bind ctrl-t:toggle-all --bind ctrl-p:toggle-preview --bind ctrl-w:toggle-preview-wrap"
+export FZF_DEFAULT_OPTS="--layout reverse --no-mouse --cycle --bind alt-j:jump --bind alt-t:toggle-all --bind alt-p:toggle-preview --bind alt-w:toggle-preview-wrap"

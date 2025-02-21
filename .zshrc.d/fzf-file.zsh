@@ -55,3 +55,4 @@ function fzf-file() {
 
 zle -N fzf-file
 bindkey "^[f" fzf-file
+bindkey "^[/" fzf-file

@@ -2,9 +2,6 @@
 	excludesfile = ~/.gitignore_global
 	quotepath = false
 
-[init]
-	templatedir = ~/.git.template.d
-
 [color]
 	ui = auto
 

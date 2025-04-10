@@ -1,9 +1,10 @@
 [core]
 	excludesfile = ~/.gitignore_global
+	hooksPath = ~/.git.hooks.d
 	quotepath = false
 
 [init]
-	templatedir = ~/.git.template.d
+	defaultBranch = main
 
 [color]
 	ui = auto

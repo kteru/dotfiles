@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+
+GIT_ROOT="$(git rev-parse --show-toplevel)"
+HOOK_NAME="${1}"
+
+HOOK="${GIT_ROOT}/.git/hooks/${HOOK_NAME}"
+[ ! -x "${HOOK}" ] && exit 0
+
+"${HOOK}" "${@:2}"

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+ret=0
+
 if [ "$(git config --local user.name)" = "" ]; then
   echo "[ERROR] user.name is not set locally"
   ret=1

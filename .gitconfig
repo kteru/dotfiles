@@ -3,6 +3,9 @@
 	hooksPath = ~/.git.hooks.d
 	quotepath = false
 
+[init]
+	defaultBranch = main
+
 [color]
 	ui = auto
 

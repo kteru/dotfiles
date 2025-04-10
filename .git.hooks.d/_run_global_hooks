@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -e
+
+DIR_BASE="$(cd -- "${BASH_SOURCE[0]%/*}" && pwd)"
+HOOK_NAME="${1}"
+
+DIR_HOOKS="${DIR_BASE}/${HOOK_NAME}.d"
+[ ! -d "${DIR_HOOKS}" ] && exit 0
+
+ls "${DIR_HOOKS}/" | sort | while read file; do
+  hook="${DIR_HOOKS}/${file}"
+  [ ! -x "${hook}" ] && continue
+
+  "${hook}" "${@:2}"
+done

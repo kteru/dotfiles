@@ -16,6 +16,7 @@ emacs:
 git:
 	ln -fs ${PWD}/.gitconfig ${HOME}/.gitconfig
 	ln -fs ${PWD}/.gitignore_global ${HOME}/.gitignore_global
+	ln -fsn ${PWD}/.git.hooks.d ${HOME}/.git.hooks.d
 
 eslint:
 	ln -fs ${PWD}/.eslintrc ${HOME}/.eslintrc

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+
+DIR_BASE="$(cd -- "${BASH_SOURCE[0]%/*}" && pwd)"
+HOOK_NAME="${BASH_SOURCE[0]##*/}"
+
+"${DIR_BASE}/_run_global_hooks" "${HOOK_NAME}" "${@}"
+"${DIR_BASE}/_run_local_hooks" "${HOOK_NAME}" "${@}"

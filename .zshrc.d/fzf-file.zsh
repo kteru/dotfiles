@@ -7,7 +7,11 @@ function fzf-file() {
       find -L . -mindepth 1 -maxdepth 3 -type f 2>/dev/null | sort
     ) | \
     cut -c 3- | \
-    fzf --multi --query "${WORD}" --preview-window down,33% --preview 'f() {
+    fzf --multi --query "${WORD}" --no-sort \
+    --bind "alt-a:transform-query(sed -e 's|^\(!*/\$ *\)*||' <<< {q})" \
+    --bind "alt-d:transform-query(sed -e 's|^\(!*/\$ *\)*|/$ |' <<< {q})" \
+    --bind "alt-f:transform-query(sed -e 's|^\(!*/\$ *\)*|!/$ |' <<< {q})" \
+    --preview-window down,33% --preview 'f() {
       if [ -d "$1" ]; then
         ls -lAh --color "$1"
       else

@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-rg -S -L --hidden --glob "!.git" -n "$*" | \
+rg -S -L --hidden --glob "!.git" --sort path -n "$*" | \
 fzf --query "$*" --delimiter : --preview-window down,50%,+{2}/3 --preview "cat -n {1} | grep --color=always -E '^\s*{2}\s.*|^'" --bind "enter:execute(less -S +{2} {1})"

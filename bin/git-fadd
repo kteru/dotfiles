@@ -4,7 +4,7 @@ items=$(
   (
     git status --porcelain --untracked-files 2>/dev/null | grep -E '^.[^ ]' | sort -k 2
   ) | \
-  fzf --multi --query "$*" --preview-window down,66% --preview 'f() {
+  fzf --multi --query "$*" --preview-window down,50% --preview 'f() {
     iw="$(echo $1 | cut -c 1-2)"
     file="$(echo $1 | cut -c 4-)"
 

@@ -205,9 +205,9 @@ RPROMPT='${exec_time_msg}'${RPROMPT}
 ### Terminal title
 
 precmd_terminal_title() {
-  if [[ ${TERM} == [xk]term* || ${TERM} == screen ]]; then
+  if [[ ${TERM} == [xk]term* || ${TERM} == tmux* || ${TERM} == screen* ]]; then
     # user@host:~/dir
-    echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD/~HOME/~}\007"
+    echo -ne "\033]2;${USER}@${HOST%%.*}:${PWD/~HOME/~}\007"
   fi
 }
 

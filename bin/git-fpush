@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+repository=$(
+  (
+    git remote
+  ) | \
+  fzf --prompt 'repository > ' --select-1 --preview-window down,75% --preview 'git remote show -n {}'
+)
+
+if [ -z "${repository}" ]; then
+  exit 0
+fi
+
+refspec=$(
+  (
+    git branch --sort=-authordate --format "%(refname:short)" | grep -v -E '^(main|master|develop)'
+  ) | \
+  fzf --prompt 'refspec > ' --query "$*" --preview-window down,75% --preview 'git log --color --decorate --stat {}'
+)
+
+if [ -z "${refspec}" ]; then
+  exit 0
+fi
+
+git push "${repository}" "${refspec}"

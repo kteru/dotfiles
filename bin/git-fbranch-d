@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+items=$(
+  (
+    git branch --sort=-authordate --format "%(refname:short)" --merged | grep -v -E '^(main|master|develop)'
+  ) | \
+  fzf --multi --query "$*" --preview-window down,75% --preview 'git log --color --decorate --stat {}'
+)
+
+if [ -z "${items}" ]; then
+  exit 0
+fi
+
+echo "${items}" | xargs git branch -d

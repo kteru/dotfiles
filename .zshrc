@@ -256,14 +256,14 @@ case ${OSTYPE} in
     ;;
   freebsd*)
     alias ls='ls -G'
-    which gls >/dev/null 2>&1 && alias ls='gls --color=auto --quoting-style=literal'
+    command -v gls >/dev/null 2>&1 && alias ls='gls --color=auto --quoting-style=literal'
     ;;
   darwin*)
     alias ls='ls -G'
-    which gls >/dev/null 2>&1 && alias ls='gls --color=auto --quoting-style=literal'
-    which ggrep >/dev/null 2>&1 && alias grep='ggrep'
-    which gsed >/dev/null 2>&1 && alias sed='gsed'
-    which gawk >/dev/null 2>&1 && alias awk='gawk'
+    command -v gls >/dev/null 2>&1 && alias ls='gls --color=auto --quoting-style=literal'
+    command -v ggrep >/dev/null 2>&1 && alias grep='ggrep'
+    command -v gsed >/dev/null 2>&1 && alias sed='gsed'
+    command -v gawk >/dev/null 2>&1 && alias awk='gawk'
     alias rsync='rsync --iconv=UTF-8-MAC,UTF-8'
     alias ldd='echo Use otool -L'
     alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'

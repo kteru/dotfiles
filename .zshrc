@@ -19,9 +19,6 @@ WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 setopt no_beep
 setopt nolistbeep
 
-# Disable bracketed paste mode by default
-unset zle_bracketed_paste
-
 # Changing directories without cd
 setopt auto_cd
 # Automatically pushd
@@ -235,6 +232,14 @@ bindkey "\e[Z" reverse-menu-complete
 # Ctrl-p/n
 bindkey "^p" history-beginning-search-backward
 bindkey "^n" history-beginning-search-forward
+
+
+###
+### Tweaks
+###
+
+# Disable bracketed paste mode by default
+unset zle_bracketed_paste
 
 
 ###

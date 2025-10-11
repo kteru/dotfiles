@@ -19,6 +19,9 @@ WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 setopt no_beep
 setopt nolistbeep
 
+# Disable bracketed paste mode by default
+unset zle_bracketed_paste
+
 # Changing directories without cd
 setopt auto_cd
 # Automatically pushd

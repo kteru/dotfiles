@@ -7,7 +7,7 @@ function fzf-history() {
     return 0
   fi
 
-  BUFFER="${item}"
+  BUFFER="$(echo -ne ${item})"
   CURSOR=${#BUFFER}
 }
 

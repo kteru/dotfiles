@@ -11,6 +11,7 @@ function fzf-file() {
     --bind "alt-a:transform-query(sed -e 's|^\(!*/\$ *\)*||' <<< {q})" \
     --bind "alt-d:transform-query(sed -e 's|^\(!*/\$ *\)*|/$ |' <<< {q})" \
     --bind "alt-f:transform-query(sed -e 's|^\(!*/\$ *\)*|!/$ |' <<< {q})" \
+    --bind "alt-enter:execute(less -S {})" \
     --preview-window down,33% --preview 'f() {
       if [ -d "$1" ]; then
         ls -lAh --color "$1"

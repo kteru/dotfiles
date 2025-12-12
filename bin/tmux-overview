@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+: ${NUMBER=10}
+
+while getopts :n: OPT; do
+  case ${OPT} in
+    n) NUMBER="${OPTARG}";;
+  esac
+done
+
+tmux list-panes -a -F "#S:#I.#P #W #T" | while read -r target_pane window_name pane_title; do
+  printf \
+    '\033[47m   \033[46m%s\033[47m   \033[46m%s\033[47m   \033[46m%s\033[47m                  \033[0m\n' \
+    "${target_pane}" "${window_name}" "${pane_title}"
+  tmux capture-pane -t "${target_pane}" -S 0 -E - -e -p | tail -n "${NUMBER}"
+  printf '\n'
+done

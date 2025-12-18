@@ -12,6 +12,6 @@ tmux list-panes -a -F "#S:#I.#P #W #T" | while read -r target_pane window_name p
   printf \
     '\033[47m   \033[46m%s\033[47m   \033[46m%s\033[47m   \033[46m%s\033[47m                  \033[0m\n' \
     "${target_pane}" "${window_name}" "${pane_title}"
-  tmux capture-pane -t "${target_pane}" -S 0 -E - -e -p | tail -n "${NUMBER}"
+  tmux capture-pane -t "${target_pane}" -S 0 -E - -e -p | awk '/^$/ { n++; next } { for(i=0; i<n; i++) print ""; print; n=0 }' | tail -n "${NUMBER}"
   printf '\n'
 done

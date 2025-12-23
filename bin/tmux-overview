@@ -1,14 +1,23 @@
 #!/usr/bin/env bash
 
 : ${NUMBER=10}
+: ${TARGET=}
 
-while getopts :n: OPT; do
+while getopts :n:t: OPT; do
   case ${OPT} in
     n) NUMBER="${OPTARG}";;
+    t) TARGET="${OPTARG}";;
   esac
 done
 
 tmux list-panes -a -F "#S:#I.#P #W #T" | while read -r target_pane window_name pane_title; do
+  if [ -n "${TARGET}" ]; then
+    case "${target_pane}" in
+      ${TARGET}) ;;
+      *) continue;;
+    esac
+  fi
+
   printf \
     '\033[47m   \033[46m%s\033[47m   \033[46m%s\033[47m   \033[46m%s\033[47m                  \033[0m\n' \
     "${target_pane}" "${window_name}" "${pane_title}"

@@ -3,7 +3,7 @@ function peco-cd() {
 
   item=$( (
     if [ -x ~/.zshrc.d/peco-cd-list ]; then
-      ~/.zshrc.d/peco-cd-list
+      ~/.zshrc.d/peco-cd-list 2>/dev/null
     else
       ghq list --full-path
     fi

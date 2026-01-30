@@ -3,7 +3,7 @@ function fzf-cd() {
 
   item=$( (
     if [ -x ~/.zshrc.d/fzf-cd-list ]; then
-      ~/.zshrc.d/fzf-cd-list
+      ~/.zshrc.d/fzf-cd-list 2>/dev/null
     else
       ghq list --full-path
     fi

@@ -69,6 +69,7 @@ setopt hist_verify
 ###
 
 autoload -U compinit && compinit -u
+autoload -U bashcompinit && bashcompinit
 
 # Smart completion
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'

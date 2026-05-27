@@ -1,10 +1,21 @@
 function fzf-ssh-add() {
+  declare -A added_fingerprints=()
+  while IFS= read -r fingerprint; do
+    added_fingerprints["${fingerprint}"]=1
+  done < <(ssh-add -l | grep -v "The agent has no identities." | awk '{print $2}')
+
   items=$(
     (
-      grep -D skip -IRlE "BEGIN .* PRIVATE KEY" ~/.ssh
-      ssh-add -l | grep -v "The agent has no identities." | awk '{print $3}'
+      while IFS= read -r keyfile; do
+        fingerprint=$(ssh-keygen -l -f "${keyfile}" 2>/dev/null | awk '{print $2}')
+
+        if [ -n "${added_fingerprints["${fingerprint}"]}" ]; then
+          echo "* ${keyfile}"
+        else
+          echo "  ${keyfile}"
+        fi
+      done < <(grep -D skip -IRlE "BEGIN .* PRIVATE KEY" ~/.ssh | sort)
     ) | \
-    sort | uniq -c | sed -e 's/^ *1 */  /' -e 's/^ *[23] */* /' | \
     fzf --multi
   )
 
@@ -13,14 +24,14 @@ function fzf-ssh-add() {
   fi
 
   echo
-  while IFS= read item; do
-    key="${item:2}"
-    is_loaded=$(test "${item:0:1}" = "*"; echo $?)
+  while IFS= read -r item; do
+    keyfile="${item:2}"
+    added="${item:0:1}"
 
-    if [ ${is_loaded} -ne 0 ]; then
-      ssh-add "${key}"
+    if [ "${added}" = " " ]; then
+      ssh-add "${keyfile}"
     else
-      ssh-add -d "${key}"
+      ssh-add -d "${keyfile}"
     fi
   done < <(echo "${items}")
 

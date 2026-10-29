@@ -10,10 +10,10 @@ items=$(
 
     if [ "${iw}" = "??" ]; then
       cd "$(git rev-parse --show-toplevel)"
-      git diff --color --no-index -- /dev/null "${file}"
+      git diff --color --no-index -- /dev/null "${file}" | COLUMNS="${FZF_PREVIEW_COLUMNS}" eval "$(git var GIT_PAGER)"
     else
       cd "$(git rev-parse --show-toplevel)"
-      git diff --color -- "${file}"
+      git diff --color -- "${file}" | COLUMNS="${FZF_PREVIEW_COLUMNS}" eval "$(git var GIT_PAGER)"
     fi
   }; f {}' | \
   cut -c 4-

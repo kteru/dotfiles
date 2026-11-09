@@ -18,5 +18,9 @@ git:
 	ln -fs ${PWD}/.gitignore_global ${HOME}/.gitignore_global
 	ln -fsn ${PWD}/.git.hooks.d ${HOME}/.git.hooks.d
 
+gwq:
+	test -d ${HOME}/.config/gwq || mkdir -p ${HOME}/.config/gwq
+	ln -fs ${PWD}/.config/gwq/config.toml ${HOME}/.config/gwq/config.toml
+
 eslint:
 	ln -fs ${PWD}/.eslintrc ${HOME}/.eslintrc
